@@ -1,0 +1,9 @@
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/uninstall.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/10_uninstall.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/test.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/edit_cache.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/rebuild_cache.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/list_install_components.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/install.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/install/local.dir
+/home/turtlebot/ros2_ws/src/build/10/CMakeFiles/install/strip.dir

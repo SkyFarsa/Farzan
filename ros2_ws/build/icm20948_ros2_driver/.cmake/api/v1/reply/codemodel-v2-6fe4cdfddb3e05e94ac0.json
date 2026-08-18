@@ -1,0 +1,97 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-d0831342358cd65f8139.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.12"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "icm20948_ros2_driver",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_icm20948_ros2_driver_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_icm20948_ros2_driver_egg-511c8acc0213e16389a6.json",
+					"name" : "ament_cmake_python_build_icm20948_ros2_driver_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_icm20948_ros2_driver::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_icm20948_ros2_driver-f8631ecf45ef5b2bf837.json",
+					"name" : "ament_cmake_python_copy_icm20948_ros2_driver",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_icm20948_ros2_driver_setup::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_icm20948_ros2_driver_setup-c5cc3e3f49dd48d28bf3.json",
+					"name" : "ament_cmake_python_copy_icm20948_ros2_driver_setup",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "icm20948_ros2_driver_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-icm20948_ros2_driver_uninstall-19aa56234561b3ff07b5.json",
+					"name" : "icm20948_ros2_driver_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-a485015c114028bd212c.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/rislab/ros2_ws/build/icm20948_ros2_driver",
+		"source" : "/home/rislab/ros2_ws/src/icm20948_ros2_driver"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Robot Admin Panel</title>
+  <style>
+    body { font-family: Arial; display: flex; gap: 20px; padding: 20px; background: #1a1a2e; color: white; }
+    #map-container { border: 2px solid #444; background: #000; position: relative; }
+    canvas { cursor: crosshair; }
+    #sidebar { width: 250px; }
+    input, button { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
+    button { background: #4ecca3; border: none; cursor: pointer; font-weight: bold; }
+    .dest-item { background: #16213e; padding: 8px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
+    .del-btn { background: #e94560; color: white; border: none; cursor: pointer; padding: 2px 8px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h2>🗺️ Admin Panel</h2>
+  <p style="color:#aaa; font-size:13px;">Click on the map to place a waypoint</p>
+
+  <div id="click-info" style="background:#16213e; padding:10px; border-radius:5px; margin:10px 0;">
+    <div>X: <span id="coord-x">-</span></div>
+    <div>Y: <span id="coord-y">-</span></div>
+  </div>
+
+  <input type="text" id="dest-name" placeholder="Destination name (e.g. Table 1)">
+  <button onclick="saveDestination()">💾 Save Waypoint</button>
+
+  <hr style="border-color:#444; margin:15px 0">
+  <h3>Saved Destinations</h3>
+  <div id="dest-list"></div>
+</div>
+
+<div id="map-container">
+  <!-- ROS map renders here via ROS2D.js -->
+  <div id="map"></div>
+</div>
+
+<!-- ROS bridge libraries -->
+<script src="https://cdn.jsdelivr.net/npm/eventemitter2/lib/eventemitter2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/roslib/build/roslib.min.js"></script>
+
+<script>
+  // Replace with your PC's IP address
+  const PC_IP = "192.168.1.100";
+  
+  let clickedX = null, clickedY = null;
+
+  // Connect to rosbridge
+  const ros = new ROSLIB.Ros({ url: `ws://${PC_IP}:9090` });
+  ros.on('connection', () => console.log('Connected to ROS'));
+  ros.on('error', (e) => console.error('ROS error:', e));
+
+  // Subscribe to /clicked_point — when admin clicks on map
+  const clickedPoint = new ROSLIB.Topic({
+    ros, name: '/clicked_point', messageType: 'geometry_msgs/PointStamped'
+  });
+
+  clickedPoint.subscribe((msg) => {
+    clickedX = msg.point.x.toFixed(3);
+    clickedY = msg.point.y.toFixed(3);
+    document.getElementById('coord-x').textContent = clickedX;
+    document.getElementById('coord-y').textContent = clickedY;
+  });
+
+  // Save a destination
+  async function saveDestination() {
+    const name = document.getElementById('dest-name').value.trim();
+    if (!name || clickedX === null) {
+      alert('Please click on the map first, then enter a name.');
+      return;
+    }
+    await fetch('/destinations', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ name, x: parseFloat(clickedX), y: parseFloat(clickedY), yaw: 0 })
+    });
+    document.getElementById('dest-name').value = '';
+    loadDestinations();
+  }
+
+  // Delete a destination
+  async function deleteDestination(name) {
+    await fetch(`/destinations/${encodeURIComponent(name)}`, { method: 'DELETE' });
+    loadDestinations();
+  }
+
+  // Load and display saved destinations
+  async function loadDestinations() {
+    const res = await fetch('/destinations');
+    const data = await res.json();
+    const list = document.getElementById('dest-list');
+    list.innerHTML = '';
+    for (const [name, coords] of Object.entries(data)) {
+      list.innerHTML += `
+        <div class="dest-item">
+          <span>📍 ${name}<br><small style="color:#aaa">(${coords.x}, ${coords.y})</small></span>
+          <button class="del-btn" onclick="deleteDestination('${name}')">✕</button>
+        </div>`;
+    }
+  }
+
+  loadDestinations();
+</script>
+</body>
+</html>
+

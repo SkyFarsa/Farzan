@@ -1,0 +1,375 @@
+[0.155s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[0.155s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x77a1e75a40a0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x77a1e751da80>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x77a1e751da80>>, mixin_verb=('build',))
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.401s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.401s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/rislab/ros2_ws'
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.401s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.402s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.402s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.402s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.415s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.415s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.415s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.415s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.415s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.416s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extension 'ignore'
+[0.417s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extension 'ignore_ament_install'
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extensions ['colcon_pkg']
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extension 'colcon_pkg'
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extensions ['colcon_meta']
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extension 'colcon_meta'
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extensions ['ros']
+[0.418s] Level 1:colcon.colcon_core.package_identification:_identify(src/ldlidar_ros2) by extension 'ros'
+[0.421s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ldlidar_ros2' with type 'ros.ament_cmake' and name 'ldlidar_ros2'
+[0.421s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extensions ['ignore', 'ignore_ament_install']
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extension 'ignore'
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extension 'ignore_ament_install'
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extensions ['colcon_pkg']
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extension 'colcon_pkg'
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extensions ['colcon_meta']
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extension 'colcon_meta'
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extensions ['ros']
+[0.422s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot) by extension 'ros'
+[0.423s] DEBUG:colcon.colcon_core.package_identification:Package 'src/my_robot' with type 'ros.ament_cmake' and name 'my_robot'
+[0.423s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extensions ['ignore', 'ignore_ament_install']
+[0.423s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extension 'ignore'
+[0.423s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extension 'ignore_ament_install'
+[0.423s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extensions ['colcon_pkg']
+[0.423s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extension 'colcon_pkg'
+[0.424s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extensions ['colcon_meta']
+[0.424s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extension 'colcon_meta'
+[0.424s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extensions ['ros']
+[0.424s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_cartographer) by extension 'ros'
+[0.425s] DEBUG:colcon.colcon_core.package_identification:Package 'src/my_robot_cartographer' with type 'ros.ament_cmake' and name 'my_robot_cartographer'
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extensions ['ignore', 'ignore_ament_install']
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extension 'ignore'
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extension 'ignore_ament_install'
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extensions ['colcon_pkg']
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extension 'colcon_pkg'
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extensions ['colcon_meta']
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extension 'colcon_meta'
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extensions ['ros']
+[0.425s] Level 1:colcon.colcon_core.package_identification:_identify(src/my_robot_navigation) by extension 'ros'
+[0.426s] DEBUG:colcon.colcon_core.package_identification:Package 'src/my_robot_navigation' with type 'ros.catkin' and name 'my_robot_navigation'
+[0.426s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.426s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.426s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.426s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.426s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.460s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.460s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/tb3_bringup' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/tb3_arduino_driver' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/my_robot_cartographer' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/my_robot' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/ldlidar_ros2' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/launch_testing_examples' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.462s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_service' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_client' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclpy_executors' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_wait_set' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_multithreaded_executor' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_timer' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_subscriber' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_service' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_publisher' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_composition' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_client' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_action_server' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_action_client' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_cbg_executor' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.ament:The path '/home/rislab/ros2_ws/install/examples_rclcpp_async_client' in the environment variable AMENT_PREFIX_PATH doesn't exist
+[0.463s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/my_robot_navigation' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/tb3_bringup' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/my_robot_cartographer' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/my_robot' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/ldlidar_ros2' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_wait_set' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_multithreaded_executor' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_timer' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_subscriber' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_service' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_publisher' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_composition' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_client' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_action_server' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_minimal_action_client' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_cbg_executor' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.464s] WARNING:colcon.colcon_ros.prefix_path.catkin:The path '/home/rislab/ros2_ws/install/examples_rclcpp_async_client' in the environment variable CMAKE_PREFIX_PATH doesn't exist
+[0.465s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 0 installed packages in /home/rislab/ros2_ws/install
+[0.466s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 12 installed packages in /home/rislab/turtlebot3_ws/install
+[0.468s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 327 installed packages in /opt/ros/humble
+[0.470s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_args' from command line to 'None'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_target' from command line to 'None'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_clean_cache' from command line to 'False'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_clean_first' from command line to 'False'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'cmake_force_configure' from command line to 'False'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'ament_cmake_args' from command line to 'None'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'catkin_cmake_args' from command line to 'None'
+[0.528s] Level 5:colcon.colcon_core.verb:set package 'ldlidar_ros2' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.528s] DEBUG:colcon.colcon_core.verb:Building package 'ldlidar_ros2' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rislab/ros2_ws/build/ldlidar_ros2', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rislab/ros2_ws/install/ldlidar_ros2', 'merge_install': False, 'path': '/home/rislab/ros2_ws/src/ldlidar_ros2', 'symlink_install': True, 'test_result_base': None}
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_args' from command line to 'None'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_target' from command line to 'None'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_clean_cache' from command line to 'False'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_clean_first' from command line to 'False'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'cmake_force_configure' from command line to 'False'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'ament_cmake_args' from command line to 'None'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'catkin_cmake_args' from command line to 'None'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.529s] DEBUG:colcon.colcon_core.verb:Building package 'my_robot' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rislab/ros2_ws/build/my_robot', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rislab/ros2_ws/install/my_robot', 'merge_install': False, 'path': '/home/rislab/ros2_ws/src/my_robot', 'symlink_install': True, 'test_result_base': None}
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_args' from command line to 'None'
+[0.529s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_target' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_clean_cache' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_clean_first' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'cmake_force_configure' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'ament_cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'catkin_cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_cartographer' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.530s] DEBUG:colcon.colcon_core.verb:Building package 'my_robot_cartographer' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rislab/ros2_ws/build/my_robot_cartographer', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rislab/ros2_ws/install/my_robot_cartographer', 'merge_install': False, 'path': '/home/rislab/ros2_ws/src/my_robot_cartographer', 'symlink_install': True, 'test_result_base': None}
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_target' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_clean_cache' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_clean_first' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'cmake_force_configure' from command line to 'False'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'ament_cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'catkin_cmake_args' from command line to 'None'
+[0.530s] Level 5:colcon.colcon_core.verb:set package 'my_robot_navigation' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.530s] DEBUG:colcon.colcon_core.verb:Building package 'my_robot_navigation' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/rislab/ros2_ws/build/my_robot_navigation', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/rislab/ros2_ws/install/my_robot_navigation', 'merge_install': False, 'path': '/home/rislab/ros2_ws/src/my_robot_navigation', 'symlink_install': True, 'test_result_base': None}
+[0.531s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.532s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.532s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rislab/ros2_ws/src/ldlidar_ros2' with build type 'ament_cmake'
+[0.532s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rislab/ros2_ws/src/ldlidar_ros2'
+[0.535s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.535s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.535s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.541s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rislab/ros2_ws/src/my_robot' with build type 'ament_cmake'
+[0.541s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rislab/ros2_ws/src/my_robot'
+[0.541s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.541s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.547s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/rislab/ros2_ws/src/my_robot_cartographer' with build type 'ament_cmake'
+[0.547s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rislab/ros2_ws/src/my_robot_cartographer'
+[0.547s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.547s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.553s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/rislab/ros2_ws/src/my_robot_navigation' with build type 'catkin'
+[0.553s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/rislab/ros2_ws/src/my_robot_navigation'
+[0.553s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.553s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.564s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/ldlidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/ldlidar_ros2
+[0.569s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot
+[0.573s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_cartographer': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_cartographer -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_cartographer
+[0.579s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_navigation -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_navigation
+[1.573s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_navigation -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_navigation
+[1.577s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_navigation -- -j8 -l8
+[1.583s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot
+[1.587s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot -- -j8 -l8
+[1.633s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_navigation -- -j8 -l8
+[1.648s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_navigation
+[1.650s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot -- -j8 -l8
+[1.653s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot
+[1.670s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_navigation
+[1.670s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_navigation', 'ros_package_path')
+[1.671s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/ros_package_path.ps1'
+[1.672s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/ros_package_path.dsv'
+[1.673s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/ros_package_path.sh'
+[1.675s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_navigation', 'pkg_config_path')
+[1.675s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path.ps1'
+[1.677s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path.dsv'
+[1.678s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path.sh'
+[1.681s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_navigation', 'pkg_config_path_multiarch')
+[1.681s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path_multiarch.ps1'
+[1.682s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path_multiarch.dsv'
+[1.683s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/pkg_config_path_multiarch.sh'
+[1.684s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_robot_navigation)
+[1.688s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation' for CMake module files
+[1.688s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation' for CMake config files
+[1.689s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_navigation', 'cmake_prefix_path')
+[1.689s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/cmake_prefix_path.ps1'
+[1.689s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/cmake_prefix_path.dsv'
+[1.690s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/hook/cmake_prefix_path.sh'
+[1.690s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation/bin'
+[1.691s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation/lib/pkgconfig/my_robot_navigation.pc'
+[1.691s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation/lib/python3.10/site-packages'
+[1.691s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_navigation/bin'
+[1.692s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.ps1'
+[1.693s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.dsv'
+[1.693s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.sh'
+[1.694s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.bash'
+[1.695s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.zsh'
+[1.696s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/my_robot_navigation/share/colcon-core/packages/my_robot_navigation)
+[1.901s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_robot)
+[1.902s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot
+[1.902s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot' for CMake module files
+[1.904s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot' for CMake config files
+[1.904s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot', 'cmake_prefix_path')
+[1.904s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.ps1'
+[1.905s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.dsv'
+[1.906s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.sh'
+[1.907s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/bin'
+[1.907s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/lib/pkgconfig/my_robot.pc'
+[1.907s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/lib/python3.10/site-packages'
+[1.908s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/bin'
+[1.909s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.ps1'
+[1.910s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.dsv'
+[1.910s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.sh'
+[1.911s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.bash'
+[1.911s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.zsh'
+[1.911s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/my_robot/share/colcon-core/packages/my_robot)
+[1.912s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_robot)
+[1.912s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot' for CMake module files
+[1.913s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot' for CMake config files
+[1.913s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot', 'cmake_prefix_path')
+[1.913s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.ps1'
+[1.914s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.dsv'
+[1.914s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot/share/my_robot/hook/cmake_prefix_path.sh'
+[1.915s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/bin'
+[1.915s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/lib/pkgconfig/my_robot.pc'
+[1.915s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/lib/python3.10/site-packages'
+[1.915s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot/bin'
+[1.916s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.ps1'
+[1.916s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.dsv'
+[1.917s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.sh'
+[1.917s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.bash'
+[1.918s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot/share/my_robot/package.zsh'
+[1.918s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/my_robot/share/colcon-core/packages/my_robot)
+[2.775s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/ldlidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/ldlidar_ros2
+[2.777s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/ldlidar_ros2 -- -j8 -l8
+[7.435s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_cartographer' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_cartographer -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_cartographer
+[7.438s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_cartographer': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_cartographer -- -j8 -l8
+[7.505s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_cartographer' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_cartographer -- -j8 -l8
+[7.507s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/my_robot_cartographer': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_cartographer
+[7.830s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_robot_cartographer)
+[7.831s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer' for CMake module files
+[7.831s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/my_robot_cartographer' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_cartographer
+[7.831s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer' for CMake config files
+[7.832s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_cartographer', 'cmake_prefix_path')
+[7.832s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.ps1'
+[7.832s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.dsv'
+[7.833s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.sh'
+[7.833s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/bin'
+[7.834s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/lib/pkgconfig/my_robot_cartographer.pc'
+[7.834s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/lib/python3.10/site-packages'
+[7.834s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/bin'
+[7.834s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.ps1'
+[7.835s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.dsv'
+[7.835s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.sh'
+[7.836s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.bash'
+[7.836s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.zsh'
+[7.837s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/my_robot_cartographer/share/colcon-core/packages/my_robot_cartographer)
+[7.837s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(my_robot_cartographer)
+[7.837s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer' for CMake module files
+[7.838s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer' for CMake config files
+[7.838s] Level 1:colcon.colcon_core.shell:create_environment_hook('my_robot_cartographer', 'cmake_prefix_path')
+[7.838s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.ps1'
+[7.839s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.dsv'
+[7.839s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/hook/cmake_prefix_path.sh'
+[7.840s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/bin'
+[7.840s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/lib/pkgconfig/my_robot_cartographer.pc'
+[7.840s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/lib/python3.10/site-packages'
+[7.841s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/my_robot_cartographer/bin'
+[7.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.ps1'
+[7.842s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.dsv'
+[7.842s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.sh'
+[7.843s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.bash'
+[7.843s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.zsh'
+[7.844s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/my_robot_cartographer/share/colcon-core/packages/my_robot_cartographer)
+[11.853s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/ldlidar_ros2 -- -j8 -l8
+[11.855s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/ldlidar_ros2
+[12.231s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ldlidar_ros2)
+[12.231s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2' for CMake module files
+[12.232s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/ldlidar_ros2
+[12.232s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2' for CMake config files
+[12.232s] Level 1:colcon.colcon_core.shell:create_environment_hook('ldlidar_ros2', 'cmake_prefix_path')
+[12.233s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.ps1'
+[12.233s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.dsv'
+[12.234s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.sh'
+[12.234s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib'
+[12.234s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/bin'
+[12.234s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib/pkgconfig/ldlidar_ros2.pc'
+[12.235s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib/python3.10/site-packages'
+[12.235s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/bin'
+[12.235s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.ps1'
+[12.236s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv'
+[12.236s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.sh'
+[12.237s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.bash'
+[12.237s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.zsh'
+[12.237s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/ldlidar_ros2/share/colcon-core/packages/ldlidar_ros2)
+[12.238s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ldlidar_ros2)
+[12.238s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2' for CMake module files
+[12.239s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2' for CMake config files
+[12.239s] Level 1:colcon.colcon_core.shell:create_environment_hook('ldlidar_ros2', 'cmake_prefix_path')
+[12.239s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.ps1'
+[12.240s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.dsv'
+[12.240s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/hook/cmake_prefix_path.sh'
+[12.241s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib'
+[12.241s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/bin'
+[12.241s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib/pkgconfig/ldlidar_ros2.pc'
+[12.242s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/lib/python3.10/site-packages'
+[12.242s] Level 1:colcon.colcon_core.environment:checking '/home/rislab/ros2_ws/install/ldlidar_ros2/bin'
+[12.242s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.ps1'
+[12.243s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv'
+[12.243s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.sh'
+[12.244s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.bash'
+[12.245s] INFO:colcon.colcon_core.shell:Creating package script '/home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.zsh'
+[12.245s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/rislab/ros2_ws/install/ldlidar_ros2/share/colcon-core/packages/ldlidar_ros2)
+[12.246s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[12.246s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[12.246s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[12.246s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[12.253s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[12.253s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[12.253s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[12.269s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[12.270s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rislab/ros2_ws/install/local_setup.ps1'
+[12.271s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rislab/ros2_ws/install/_local_setup_util_ps1.py'
+[12.273s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rislab/ros2_ws/install/setup.ps1'
+[12.275s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rislab/ros2_ws/install/local_setup.sh'
+[12.277s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/rislab/ros2_ws/install/_local_setup_util_sh.py'
+[12.278s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rislab/ros2_ws/install/setup.sh'
+[12.280s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rislab/ros2_ws/install/local_setup.bash'
+[12.281s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rislab/ros2_ws/install/setup.bash'
+[12.283s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/rislab/ros2_ws/install/local_setup.zsh'
+[12.284s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/rislab/ros2_ws/install/setup.zsh'

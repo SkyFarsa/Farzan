@@ -1,0 +1,50 @@
+[0.025s] Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_navigation -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_navigation
+[0.114s] -- The C compiler identification is GNU 11.4.0
+[0.200s] -- The CXX compiler identification is GNU 11.4.0
+[0.214s] -- Detecting C compiler ABI info
+[0.316s] -- Detecting C compiler ABI info - done
+[0.326s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.327s] -- Detecting C compile features
+[0.328s] -- Detecting C compile features - done
+[0.331s] -- Detecting CXX compiler ABI info
+[0.450s] -- Detecting CXX compiler ABI info - done
+[0.475s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.475s] -- Detecting CXX compile features
+[0.476s] -- Detecting CXX compile features - done
+[0.482s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.725s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[1.008s] -- Configuring done
+[1.011s] -- Generating done
+[1.012s] [33mCMake Warning:
+[1.012s]   Manually-specified variables were not used by the project:
+[1.013s] 
+[1.013s]     CATKIN_INSTALL_INTO_PREFIX_ROOT
+[1.013s]     CATKIN_SYMLINK_INSTALL
+[1.013s] 
+[1.013s] [0m
+[1.014s] -- Build files have been written to: /home/rislab/ros2_ws/build/my_robot_navigation
+[1.019s] Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake /home/rislab/ros2_ws/src/my_robot_navigation -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/my_robot_navigation
+[1.022s] Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_navigation -- -j8 -l8
+[1.079s] Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake --build /home/rislab/ros2_ws/build/my_robot_navigation -- -j8 -l8
+[1.095s] Invoking command in '/home/rislab/ros2_ws/build/my_robot_navigation': /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_navigation
+[1.107s] -- Install configuration: ""
+[1.107s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/launch
+[1.107s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/launch/nav2.launch.py
+[1.107s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/config
+[1.107s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/config/nav2_params.yaml
+[1.108s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/ament_index/resource_index/package_run_dependencies/my_robot_navigation
+[1.109s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/ament_index/resource_index/parent_prefix_path/my_robot_navigation
+[1.109s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/environment/ament_prefix_path.sh
+[1.109s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/environment/ament_prefix_path.dsv
+[1.109s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/environment/path.sh
+[1.110s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/environment/path.dsv
+[1.110s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/local_setup.bash
+[1.110s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/local_setup.sh
+[1.110s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/local_setup.zsh
+[1.111s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/local_setup.dsv
+[1.111s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.dsv
+[1.111s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/ament_index/resource_index/packages/my_robot_navigation
+[1.112s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/cmake/my_robot_navigationConfig.cmake
+[1.112s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/cmake/my_robot_navigationConfig-version.cmake
+[1.112s] -- Installing: /home/rislab/ros2_ws/install/my_robot_navigation/share/my_robot_navigation/package.xml
+[1.116s] Invoked command in '/home/rislab/ros2_ws/build/my_robot_navigation' returned '0': /usr/bin/cmake --install /home/rislab/ros2_ws/build/my_robot_navigation

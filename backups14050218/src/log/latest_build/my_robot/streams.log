@@ -1,0 +1,11 @@
+[0.138s] Invoking command in '/home/turtlebot/ros2_ws/src/build/my_robot': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/turtlebot/turtlebot3_ws/install/turtlebot3_teleop:/home/turtlebot/turtlebot3_ws/install/turtlebot3_example:/home/turtlebot/turtlebot3_ws/install/tb3_arduino_driver:/home/turtlebot/ros2_ws/install/tb3_arduino_driver:/opt/ros/humble /usr/bin/cmake /home/turtlebot/ros2_ws/src/my_robot -DCMAKE_INSTALL_PREFIX=/home/turtlebot/ros2_ws/src/install/my_robot
+[0.197s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.000s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[1.038s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[1.435s] -- Added test 'flake8' to check Python code syntax and style conventions
+[1.439s] -- Added test 'lint_cmake' to check CMake code style
+[1.442s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[1.457s] -- Added test 'xmllint' to check XML markup files
+[1.465s] -- Configuring done
+[1.491s] -- Generating done
+[1.503s] -- Build files have been written to: /home/turtlebot/ros2_ws/src/build/my_robot

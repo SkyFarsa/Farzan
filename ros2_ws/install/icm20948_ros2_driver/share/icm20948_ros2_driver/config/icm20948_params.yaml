@@ -1,0 +1,17 @@
+icm20948_node:
+  ros__parameters:
+    connection_type: 'i2c'
+    i2c_address: 0x69
+    i2c_bus: 1
+    frame_id: 'imu_link'
+    publish_rate: 100.0
+    publish_mag: true
+    publish_temp: true
+    
+    gyro_offset_x: 0.0
+    gyro_offset_y: 0.0
+    gyro_offset_z: 0.0
+    
+    accel_offset_x: 0.0
+    accel_offset_y: 0.0
+    accel_offset_z: 0.0

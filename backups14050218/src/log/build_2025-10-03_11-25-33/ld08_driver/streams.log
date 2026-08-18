@@ -1,0 +1,36 @@
+[0.124s] Invoking command in '/home/turtlebot/ros2_ws/src/build/ld08_driver': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/turtlebot/turtlebot3_ws/install/turtlebot3_teleop:/home/turtlebot/turtlebot3_ws/install/turtlebot3_example:/home/turtlebot/turtlebot3_ws/install/tb3_arduino_driver:/home/turtlebot/ros2_ws/install/tb3_arduino_driver:/opt/ros/humble /usr/bin/cmake /home/turtlebot/ros2_ws/src/ld08_driver -DCMAKE_INSTALL_PREFIX=/home/turtlebot/ros2_ws/src/install/ld08_driver
+[0.444s] -- The C compiler identification is GNU 11.4.0
+[0.765s] -- The CXX compiler identification is GNU 11.4.0
+[0.800s] -- Detecting C compiler ABI info
+[1.181s] -- Detecting C compiler ABI info - done
+[1.207s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.208s] -- Detecting C compile features
+[1.209s] -- Detecting C compile features - done
+[1.221s] -- Detecting CXX compiler ABI info
+[1.600s] -- Detecting CXX compiler ABI info - done
+[1.627s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.627s] -- Detecting CXX compile features
+[1.629s] -- Detecting CXX compile features - done
+[1.678s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[2.532s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[3.432s] -- Found rclcpp: 16.0.15 (/opt/ros/humble/share/rclcpp/cmake)
+[4.039s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[4.129s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[4.231s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[4.356s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[4.528s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.041s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[5.088s] -- Found rmw_fastrtps_cpp: 6.2.8 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[5.858s] -- Found OpenSSL: /usr/lib/aarch64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[6.174s] -- Found FastRTPS: /opt/ros/humble/include  
+[6.686s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[6.827s] -- Looking for pthread.h
+[7.182s] -- Looking for pthread.h - found
+[7.185s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[7.556s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[7.560s] -- Found Threads: TRUE  
+[7.934s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[8.254s] -- Found Boost: /usr/lib/aarch64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found version "1.74.0") found components: system 
+[8.581s] -- Configuring done
+[8.642s] -- Generating done
+[8.659s] -- Build files have been written to: /home/turtlebot/ros2_ws/src/build/ld08_driver

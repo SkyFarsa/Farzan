@@ -1,0 +1,17 @@
+{
+  "package_name": "depthai_ros_msgs",
+  "non_idl_tuples": [
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/AutoFocusCtrl.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/HandLandmark.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/HandLandmarkArray.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/ImuWithMagneticField.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/TrackedFeature.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/TrackedFeatures.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/SpatialDetection.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/SpatialDetectionArray.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/TrackDetection2D.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:msg/TrackDetection2DArray.msg",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:srv/TriggerNamed.srv",
+    "/home/rislab/ros2_ws/src/depthai-ros/depthai_ros_msgs:srv/NormalizedImageCrop.srv"
+  ]
+}

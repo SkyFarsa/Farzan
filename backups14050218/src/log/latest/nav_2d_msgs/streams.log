@@ -1,0 +1,21 @@
+[0.144s] Invoking command in '/home/turtlebot/ros2_ws/src/build/nav_2d_msgs': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/turtlebot/turtlebot3_ws/install/turtlebot3_teleop:/home/turtlebot/turtlebot3_ws/install/turtlebot3_example:/home/turtlebot/turtlebot3_ws/install/tb3_arduino_driver:/home/turtlebot/ros2_ws/install/tb3_arduino_driver:/opt/ros/humble /usr/bin/cmake /home/turtlebot/ros2_ws/src/navigation2/nav2_dwb_controller/nav_2d_msgs -DCMAKE_INSTALL_PREFIX=/home/turtlebot/ros2_ws/src/install/nav_2d_msgs
+[0.425s] [31mCMake Error at CMakeLists.txt:4 (find_package):
+[0.426s]   By not providing "Findbackward_ros.cmake" in CMAKE_MODULE_PATH this project
+[0.427s]   has asked CMake to find a package configuration file provided by
+[0.428s]   "backward_ros", but CMake did not find one.
+[0.429s] 
+[0.430s]   Could not find a package configuration file provided by "backward_ros" with
+[0.431s]   any of the following names:
+[0.431s] 
+[0.432s]     backward_rosConfig.cmake
+[0.441s]     backward_ros-config.cmake
+[0.442s] 
+[0.443s]   Add the installation prefix of "backward_ros" to CMAKE_PREFIX_PATH or set
+[0.444s]   "backward_ros_DIR" to a directory containing one of the above files.  If
+[0.445s]   "backward_ros" provides a separate development package or SDK, be sure it
+[0.445s]   has been installed.
+[0.446s] 
+[0.447s] [0m
+[0.449s] -- Configuring incomplete, errors occurred!
+[0.450s] See also "/home/turtlebot/ros2_ws/src/build/nav_2d_msgs/CMakeFiles/CMakeOutput.log".
+[0.451s] Invoked command in '/home/turtlebot/ros2_ws/src/build/nav_2d_msgs' returned '1': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/turtlebot/turtlebot3_ws/install/turtlebot3_teleop:/home/turtlebot/turtlebot3_ws/install/turtlebot3_example:/home/turtlebot/turtlebot3_ws/install/tb3_arduino_driver:/home/turtlebot/ros2_ws/install/tb3_arduino_driver:/opt/ros/humble /usr/bin/cmake /home/turtlebot/ros2_ws/src/navigation2/nav2_dwb_controller/nav_2d_msgs -DCMAKE_INSTALL_PREFIX=/home/turtlebot/ros2_ws/src/install/nav_2d_msgs

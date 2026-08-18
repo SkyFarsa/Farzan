@@ -1,0 +1,101 @@
+[0.031s] Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/ldlidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/ldlidar_ros2
+[0.117s] -- The C compiler identification is GNU 11.4.0
+[0.201s] -- The CXX compiler identification is GNU 11.4.0
+[0.216s] -- Detecting C compiler ABI info
+[0.316s] -- Detecting C compiler ABI info - done
+[0.329s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.329s] -- Detecting C compile features
+[0.330s] -- Detecting C compile features - done
+[0.336s] -- Detecting CXX compiler ABI info
+[0.459s] -- Detecting CXX compiler ABI info - done
+[0.469s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.469s] -- Detecting CXX compile features
+[0.471s] -- Detecting CXX compile features - done
+[0.478s] -- Found ament_cmake: 1.3.12 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.724s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter 
+[0.828s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.920s] -- Found rclcpp: 16.0.14 (/opt/ros/humble/share/rclcpp/cmake)
+[1.048s] -- Found rosidl_generator_c: 3.1.7 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.060s] -- Found rosidl_adapter: 3.1.7 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.076s] -- Found rosidl_generator_cpp: 3.1.7 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.101s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.144s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.269s] -- Found rmw_implementation_cmake: 6.1.2 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[1.279s] -- Found rmw_fastrtps_cpp: 6.2.8 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.474s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")  
+[1.520s] -- Found FastRTPS: /opt/ros/humble/include  
+[1.587s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.614s] -- Looking for pthread.h
+[1.717s] -- Looking for pthread.h - found
+[1.718s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[1.823s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[1.824s] -- Found Threads: TRUE  
+[1.927s] -- Found sensor_msgs: 4.9.0 (/opt/ros/humble/share/sensor_msgs/cmake)
+[1.985s] -- Found ament_lint_auto: 0.12.14 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[2.119s] -- operation system is Linux-6.8.0-64-generic
+[2.119s] -- current platform: Linux 
+[2.130s] -- Added test 'copyright' to check source files copyright and LICENSE
+[2.160s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[2.160s] -- Configured cppcheck include dirs: /home/rislab/ros2_ws/src/ldlidar_ros2/include;/home/rislab/ros2_ws/src/ldlidar_ros2/sdk/include
+[2.161s] -- Configured cppcheck exclude dirs and/or files: 
+[2.175s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[2.175s] -- Configured cpplint exclude dirs and/or files: 
+[2.178s] -- Added test 'flake8' to check Python code syntax and style conventions
+[2.183s] -- Added test 'lint_cmake' to check CMake code style
+[2.186s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[2.200s] -- Added test 'uncrustify' to check C / C++ code style
+[2.201s] -- Configured uncrustify additional arguments: 
+[2.204s] -- Added test 'xmllint' to check XML markup files
+[2.208s] -- Configuring done
+[2.225s] -- Generating done
+[2.230s] -- Build files have been written to: /home/rislab/ros2_ws/build/ldlidar_ros2
+[2.242s] Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake /home/rislab/ros2_ws/src/ldlidar_ros2 -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/rislab/ros2_ws/install/ldlidar_ros2
+[2.245s] Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/ldlidar_ros2 -- -j8 -l8
+[2.327s] [  7%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_driver.cpp.o[0m
+[2.327s] [ 15%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_dataprocess.cpp.o[0m
+[2.327s] [ 30%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_protocol.cpp.o[0m
+[2.327s] [ 30%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/ldlidar_driver_linux.cpp.o[0m
+[2.327s] [ 38%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/log_module.cpp.o[0m
+[2.328s] [ 46%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/network_socket_interface_linux.cpp.o[0m
+[2.333s] [ 53%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/sl_transform.cpp.o[0m
+[2.340s] [ 61%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/serial_interface_linux.cpp.o[0m
+[2.408s] [ 69%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/slbf.cpp.o[0m
+[2.916s] [ 76%] [32mBuilding CXX object sdk/CMakeFiles/ldlidar_driver.dir/src/tofbf.cpp.o[0m
+[3.738s] [ 84%] [32m[1mLinking CXX static library libldlidar_driver.a[0m
+[4.273s] [ 84%] Built target ldlidar_driver
+[4.305s] [ 92%] [32mBuilding CXX object CMakeFiles/ldlidar_ros2_node.dir/src/demo.cpp.o[0m
+[10.802s] [100%] [32m[1mLinking CXX executable ldlidar_ros2_node[0m
+[11.304s] [100%] Built target ldlidar_ros2_node
+[11.320s] Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --build /home/rislab/ros2_ws/build/ldlidar_ros2 -- -j8 -l8
+[11.322s] Invoking command in '/home/rislab/ros2_ws/build/ldlidar_ros2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/ldlidar_ros2
+[11.333s] -- Install configuration: ""
+[11.333s] -- Execute custom install script
+[11.334s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/lib/ldlidar_ros2/ldlidar_ros2_node
+[11.347s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld06.launch.py
+[11.360s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld14.launch.py
+[11.373s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld14p.launch.py
+[11.386s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/ld19.launch.py
+[11.399s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld06.launch.py
+[11.412s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld14.launch.py
+[11.425s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld14p.launch.py
+[11.439s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//launch/viewer_ld19.launch.py
+[11.451s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//rviz2/ldlidar.rviz
+[11.465s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//scripts/create_udev_rules.sh
+[11.478s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//scripts/delete_udev_rules.sh
+[11.491s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2//scripts/ldlidar.rules
+[11.504s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ament_index/resource_index/package_run_dependencies/ldlidar_ros2
+[11.516s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ament_index/resource_index/parent_prefix_path/ldlidar_ros2
+[11.529s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/environment/ament_prefix_path.sh
+[11.541s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/environment/ament_prefix_path.dsv
+[11.554s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/environment/path.sh
+[11.567s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/environment/path.dsv
+[11.580s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.bash
+[11.593s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.sh
+[11.606s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.zsh
+[11.619s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/local_setup.dsv
+[11.631s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.dsv
+[11.644s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ament_index/resource_index/packages/ldlidar_ros2
+[11.657s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/cmake/ldlidar_ros2Config.cmake
+[11.670s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/cmake/ldlidar_ros2Config-version.cmake
+[11.683s] -- Symlinking: /home/rislab/ros2_ws/install/ldlidar_ros2/share/ldlidar_ros2/package.xml
+[11.699s] Invoked command in '/home/rislab/ros2_ws/build/ldlidar_ros2' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/rislab/turtlebot3_ws/install/turtlebot3_teleop:/home/rislab/turtlebot3_ws/install/turtlebot3_example:/home/rislab/ros2_ws/install/tb3_arduino_driver:/home/rislab/ros2_ws/install/launch_testing_examples:/home/rislab/ros2_ws/install/examples_rclpy_pointcloud_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_subscriber:/home/rislab/ros2_ws/install/examples_rclpy_minimal_service:/home/rislab/ros2_ws/install/examples_rclpy_minimal_publisher:/home/rislab/ros2_ws/install/examples_rclpy_minimal_client:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_server:/home/rislab/ros2_ws/install/examples_rclpy_minimal_action_client:/home/rislab/ros2_ws/install/examples_rclpy_guard_conditions:/home/rislab/ros2_ws/install/examples_rclpy_executors:/opt/ros/humble /usr/bin/cmake --install /home/rislab/ros2_ws/build/ldlidar_ros2

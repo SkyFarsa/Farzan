@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<robot name="triangle_bot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- ================= PARAMETERS ================= -->
+  <xacro:property name="wheel_radius" value="0.06"/>         <!-- 6 cm -->
+  <xacro:property name="wheel_separation" value="0.50"/>     <!-- 50 cm -->
+  <xacro:property name="base_height" value="0.115"/>         <!-- 11.5 cm -->
+  <xacro:property name="body_side" value="0.43"/>            <!-- 43 cm triangle sides -->
+  <xacro:property name="lidar_height" value="0.235"/>        <!-- 23.5 cm from ground -->
+  <xacro:property name="camera_height" value="0.20"/>        <!-- 20 cm from ground -->
+  <xacro:property name="camera_tilt" value="-10"/>           <!-- downward 10 deg -->
+<!--  <xacro:property name="pi" value="3.141592653589793"/> -->      <!-- pi constant -->
+  <xacro:property name="mass_total" value="4.5"/>
+  <xacro:property name="mass_wheel" value="0.25"/>
+
+  <!-- ================= BASE LINK ================= -->
+  <link name="base_footprint" />
+  <joint name="base_joint" type="fixed">
+      <parent link="base_footprint"/>
+      <child link="base_link"/>
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" />
+  </joint>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${body_side} ${body_side} ${base_height}"/>
+      </geometry>
+      <material name="white">
+        <color rgba="1 1 1 1"/>
+      </material>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+    </visual>
+
+    <collision>
+      <geometry>
+        <box size="${body_side} ${body_side} ${base_height}"/>
+      </geometry>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+    </collision>
+
+    <inertial>
+      <mass value="${mass_total - 2*mass_wheel}"/>
+      <origin xyz="0 0 ${base_height/2}" rpy="0 0 0"/>
+      <inertia
+        ixx="0.02" ixy="0.0" ixz="0.0"
+        iyy="0.02" iyz="0.0"
+        izz="0.03"/>
+    </inertial>
+  </link>
+
+  <!-- ================= LEFT WHEEL ================= -->
+  <link name="left_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="0.03"/>
+      </geometry>
+      <material name="gray">
+        <color rgba="0.3 0.3 0.3 1"/>
+      </material>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="0.03"/>
+      </geometry>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="${mass_wheel}"/>
+      <inertia
+        ixx="0.0005" ixy="0" ixz="0"
+        iyy="0.0009" iyz="0"
+        izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel_link"/>
+    <origin xyz="0 ${wheel_separation/2} ${wheel_radius}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ================= RIGHT WHEEL ================= -->
+  <link name="right_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="0.03"/>
+      </geometry>
+      <material name="gray"/>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="${wheel_radius}" length="0.03"/>
+      </geometry>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    </collision>
+    <inertial>
+      <mass value="${mass_wheel}"/>
+      <inertia
+        ixx="0.0005" ixy="0" ixz="0"
+        iyy="0.0009" iyz="0"
+        izz="0.0005"/>
+    </inertial>
+  </link>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel_link"/>
+    <origin xyz="0 -${wheel_separation/2} ${wheel_radius}" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+  </joint>
+
+  <!-- ================= REAR CASTER WHEEL ================= -->
+  <link name="rear_caster_link">
+    <visual>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <material name="gray"/>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <sphere radius="0.03"/>
+      </geometry>
+      <!-- FIXED: Origin should be at 0,0,0 since joint handles the transform -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </collision>
+  </link>
+
+  <joint name="rear_caster_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="rear_caster_link"/>
+    <origin xyz="-0.18 0 0.03" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ================= LIDAR ================= -->
+  <link name="lidar_link">
+    <visual>
+      <geometry>
+        <cylinder radius="0.04" length="0.05"/>
+      </geometry>
+      <material name="black">
+        <color rgba="0 0 0 1"/>
+      </material>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="lidar_link"/>
+    <origin xyz="0 0 ${lidar_height}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ================= CAMERA ================= -->
+  <link name="camera_link">
+    <visual>
+      <geometry>
+        <box size="0.04 0.04 0.03"/>
+      </geometry>
+      <material name="black"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+  </link>
+
+  <joint name="camera_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="camera_link"/>
+    <origin xyz="${body_side/2 - 0.02} 0 ${camera_height}" rpy="${camera_tilt * pi / 180} 0 0"/>
+  </joint>
+
+  <!-- ================= IMU ================= -->
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.02"/>
+      </geometry>
+      <material name="gray"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </visual>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+    <origin xyz="0 0 ${base_height + 0.01}" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ================= ROS2 CONTROL ================= -->
+  <ros2_control name="TriangleBotSystem" type="system">
+    <hardware>
+      <plugin>diff_drive_controller/DiffDriveController</plugin>
+    </hardware>
+    <joint name="left_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+    <joint name="right_wheel_joint">
+      <command_interface name="velocity"/>
+      <state_interface name="velocity"/>
+      <state_interface name="position"/>
+    </joint>
+  </ros2_control>
+
+</robot>

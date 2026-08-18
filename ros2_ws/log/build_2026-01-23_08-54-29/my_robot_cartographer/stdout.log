@@ -1,0 +1,25 @@
+-- Install configuration: ""
+-- Execute custom install script
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/launch/__pycache__/cartographer.launch.cpython-310.pyc
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/launch/cartographer.launch.py
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/launch/frames_2025-10-05_07.22.36.gv
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/config/cartographer.lua
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/config/my_robot.lua
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/config/my_robot_lds_2d.lua
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/rviz/mapping_view.rviz
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/rviz/my_robot_cartographer.rviz
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/ament_index/resource_index/package_run_dependencies/my_robot_cartographer
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/ament_index/resource_index/parent_prefix_path/my_robot_cartographer
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/environment/ament_prefix_path.sh
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/environment/ament_prefix_path.dsv
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/environment/path.sh
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/environment/path.dsv
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/local_setup.bash
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/local_setup.sh
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/local_setup.zsh
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/local_setup.dsv
+-- Symlinking: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.dsv
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/ament_index/resource_index/packages/my_robot_cartographer
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/cmake/my_robot_cartographerConfig.cmake
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/cmake/my_robot_cartographerConfig-version.cmake
+-- Up-to-date symlink: /home/rislab/ros2_ws/install/my_robot_cartographer/share/my_robot_cartographer/package.xml
