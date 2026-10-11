@@ -1,4 +1,4 @@
 Farzan
-Hello from my first commit!
+all files and folders related to project Farzan
 ===
 
