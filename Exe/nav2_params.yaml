@@ -1,0 +1,244 @@
+amcl:
+  ros__parameters:
+    use_sim_time: false
+    base_frame_id: base_link
+    odom_frame_id: odom
+    global_frame_id: map
+    scan_topic: scan
+
+map_server:
+  ros__parameters:
+    use_sim_time: false
+    yaml_filename: ""   # overridden by launch 'map:=' argument
+
+planner_server:
+  ros__parameters:
+    use_sim_time: false
+    expected_planner_frequency: 5.0
+    planner_plugins:
+      - GridBased
+    GridBased:
+      plugin: nav2_navfn_planner/NavfnPlanner
+      tolerance: 0.25
+      use_astar: false
+      allow_unknown: true
+
+controller_server:
+  ros__parameters:
+    use_sim_time: false
+    controller_frequency: 10.0
+    min_x_velocity_threshold: 0.01
+    min_y_velocity_threshold: 0.0
+    min_theta_velocity_threshold: 0.01
+    controller_plugins:
+      - FollowPath
+    FollowPath:
+      plugin: nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController
+      desired_linear_vel: 0.12
+      max_linear_acceleration: 0.25
+      max_linear_deceleration: -0.35
+      max_angular_vel: 0.6
+      max_angular_accel: 0.7
+      allow_reversing: false
+      transform_tolerance: 0.2
+      use_rotate_to_heading: true
+      rotate_to_heading_min_angle: 0.35
+      rotate_to_heading_angular_vel: 0.4
+      max_robot_pose_search_dist: 0.5
+      use_regulated_linear_velocity_scaling: true
+      use_cost_regulated_linear_velocity_scaling: true
+      regulated_linear_velocity_scaling_factor: 0.5
+      regulated_linear_scaling_min_radius: 0.9
+      inflation_cost_scaling_factor: 3.0
+      lookahead_dist: 0.4
+      min_lookahead_dist: 0.25
+      max_lookahead_dist: 0.6
+      lookahead_time: 1.5
+      curvature_lookahead_dist: 0.4
+      use_velocity_scaled_lookahead_dist: true
+
+behavior_server:
+  ros__parameters:
+    use_sim_time: false
+    global_frame: map
+    robot_base_frame: base_link
+    transform_tolerance: 0.2
+    bond_timeout: 0.0
+    progress_timeout: 30.0
+    cycle_frequency: 10.0
+    behavior_plugins:
+      - spin
+      - backup
+      - drive_on_heading
+      - assisted_teleop
+      - wait
+    spin:
+      plugin: nav2_behaviors/Spin
+    backup:
+      plugin: nav2_behaviors/BackUp
+    drive_on_heading:
+      plugin: nav2_behaviors/DriveOnHeading
+    assisted_teleop:
+      plugin: nav2_behaviors/AssistedTeleop
+    wait:
+      plugin: nav2_behaviors/Wait
+
+smoother_server:
+  ros__parameters:
+    use_sim_time: false
+    smoother_plugins:
+      - simple_smoother
+    simple_smoother:
+      plugin: nav2_smoother::SimpleSmoother
+      tolerance: 0.05
+      max_its: 1000
+      do_refinement: true
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: false
+    global_frame: map
+    robot_base_frame: base_link
+    transform_tolerance: 0.2
+    default_nav_to_pose_bt_xml: navigate_w_replanning_and_recovery.xml
+    default_nav_through_poses_bt_xml: navigate_through_poses_w_replanning_and_recovery.xml
+
+waypoint_follower:
+  ros__parameters:
+    use_sim_time: false
+    loop_rate: 10
+    stop_on_failure: false
+    waypoint_task_executor_plugin: wait_at_waypoint
+    wait_at_waypoint:
+      plugin: nav2_waypoint_follower::WaitAtWaypoint
+      enabled: true
+      waypoint_wait_duration: 0.0
+
+# --- local_costmap ---
+# CHANGED: added the OAK-D Lite point cloud ("camera") as a second
+# observation source alongside the LIDAR ("scan"). This is the only
+# costmap the camera feeds -- NOT global_costmap below. The camera's
+# obstacles are short-range and transient (whatever's currently in frame),
+# so they belong in the rolling local costmap used for live avoidance, not
+# in the persistent global map, which should stay LIDAR/Cartographer-only.
+#
+# ALSO FIXED: your scan source was using obstacle_range/raytrace_range,
+# which aren't real Nav2 ObstacleLayer parameter names (that's the old
+# ROS1 costmap_2d naming). Nav2 silently ignores params it doesn't
+# recognize rather than erroring, so those two lines likely had zero
+# effect this whole time -- scan was running on Nav2's internal defaults.
+# Renamed to the real parameter names (obstacle_max_range, etc.) so your
+# intended 6.0/7.0 values actually take effect.
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      use_sim_time: false
+      update_frequency: 10.0
+      publish_frequency: 10.0
+      global_frame: odom
+      robot_base_frame: base_link
+      rolling_window: true
+      width: 4
+      height: 4
+      resolution: 0.05
+      footprint: "[[0.215, 0.215], [0.215, -0.215], [-0.215, -0.215], [-0.215, 0.215]]"
+      footprint_padding: 0.02
+      plugins:
+        - obstacle_layer
+        - inflation_layer
+      obstacle_layer:
+        plugin: nav2_costmap_2d::ObstacleLayer
+        enabled: true
+        observation_sources: scan camera
+        scan:
+          topic: scan
+          data_type: LaserScan
+          max_obstacle_height: 0.45
+          min_obstacle_height: 0.0
+          clearing: true
+          marking: true
+          obstacle_max_range: 6.0      # was "obstacle_range" (not a real param) -- fixed
+          obstacle_min_range: 0.0
+          raytrace_max_range: 7.0      # was "raytrace_range" (not a real param) -- fixed
+          raytrace_min_range: 0.0
+        camera:
+          topic: /oak/points
+          data_type: PointCloud2
+          clearing: true
+          marking: true
+          # Filters out the floor and anything above the robot's own
+          # height, so the ground plane itself doesn't get marked as a
+          # wall. 0.60 goes a bit above the scan's 0.45 ceiling so the
+          # camera can catch overhanging obstacles (e.g. a table edge)
+          # the LIDAR's flat plane would miss entirely.
+          min_obstacle_height: 0.05
+          max_obstacle_height: 0.60
+          obstacle_max_range: 2.5      # OAK-D Lite depth gets noisy beyond ~3-4m
+          obstacle_min_range: 0.20     # OAK-D Lite's minimum usable stereo range
+          raytrace_max_range: 2.5
+          raytrace_min_range: 0.20
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        enabled: true
+        inflation_radius: 0.6
+        cost_scaling_factor: 3.0
+
+# --- global_costmap ---
+# UNCHANGED. Deliberately NOT adding the camera here -- see note above
+# local_costmap. Also has the same obstacle_range/raytrace_range naming
+# issue as scan did above; left as-is since you didn't ask for a global
+# costmap change, but worth knowing it's there if global obstacle
+# avoidance looks off later.
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      use_sim_time: false
+      update_frequency: 2.0
+      publish_frequency: 2.0
+      global_frame: map
+      robot_base_frame: base_link
+      rolling_window: false
+      width: 20
+      height: 20
+      resolution: 0.05
+      footprint: "[[0.215, 0.215], [0.215, -0.215], [-0.215, -0.215], [-0.215, 0.215]]"
+      footprint_padding: 0.02
+      plugins:
+        - static_layer
+        - obstacle_layer
+        - inflation_layer
+      static_layer:
+        plugin: nav2_costmap_2d::StaticLayer
+        enabled: true
+        map_subscribe_transient_local: true
+      obstacle_layer:
+        plugin: nav2_costmap_2d::ObstacleLayer
+        enabled: true
+        observation_sources: scan
+        scan:
+          topic: scan
+          max_obstacle_height: 0.45
+          min_obstacle_height: 0.0
+          clearing: true
+          marking: true
+          obstacle_range: 6.0
+          raytrace_range: 7.0
+      inflation_layer:
+        plugin: nav2_costmap_2d::InflationLayer
+        enabled: true
+        inflation_radius: 0.6
+        cost_scaling_factor: 3.0
+
+lifecycle_manager:
+  ros__parameters:
+    use_sim_time: false
+    autostart: true
+    node_names:
+      - controller_server
+      - planner_server
+      - behavior_server
+      - bt_navigator
+      - waypoint_follower
+      - smoother_server
+      - map_server
+      - amcl

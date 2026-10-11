@@ -1,0 +1,60 @@
+# nav2_local_costmap.yaml
+#
+# Local costmap obstacle sources for Nav2, combining:
+#   - /scan        (LD19 LIDAR, 2D, always-on ground-truth obstacles)
+#   - /oak/points  (OAK-D Lite depth PointCloud2, catches obstacles the
+#                   LIDAR's fixed 2D plane misses — table edges, low objects)
+#
+# Merge this block into your existing nav2_params.yaml under the top-level
+# "local_costmap" key (don't run this as a standalone file).
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 5.0
+      publish_frequency: 2.0
+      global_frame: odom
+      robot_base_frame: base_link
+      use_sim_time: False
+      rolling_window: true
+      width: 3
+      height: 3
+      resolution: 0.05
+
+      plugins: ["obstacle_layer", "inflation_layer"]
+
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: true
+        observation_sources: scan camera
+
+        scan:
+          topic: /scan
+          data_type: "LaserScan"
+          marking: true
+          clearing: true
+          max_obstacle_height: 2.0
+          obstacle_max_range: 8.0
+          raytrace_max_range: 8.0
+
+        camera:
+          topic: /oak/points
+          data_type: "PointCloud2"
+          marking: true
+          clearing: true
+          # Filters out the floor and anything above the robot's own height,
+          # so the ground plane itself doesn't get marked as a wall.
+          min_obstacle_height: 0.05
+          max_obstacle_height: 0.60
+          obstacle_max_range: 2.5     # OAK-D Lite depth gets noisy beyond ~3-4m
+          obstacle_min_range: 0.20    # OAK-D Lite's minimum usable stereo range
+          raytrace_max_range: 2.5
+          raytrace_min_range: 0.20
+
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        enabled: true
+        cost_scaling_factor: 3.0
+        inflation_radius: 0.30       # a bit more than your wheel_separation/2 (0.24m)
+
+      always_send_full_costmap: true

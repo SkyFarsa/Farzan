@@ -114,6 +114,21 @@ waypoint_follower:
       enabled: true
       waypoint_wait_duration: 0.0
 
+# --- local_costmap ---
+# CHANGED: added the OAK-D Lite point cloud ("camera") as a second
+# observation source alongside the LIDAR ("scan"). This is the only
+# costmap the camera feeds -- NOT global_costmap below. The camera's
+# obstacles are short-range and transient (whatever's currently in frame),
+# so they belong in the rolling local costmap used for live avoidance, not
+# in the persistent global map, which should stay LIDAR/Cartographer-only.
+#
+# ALSO FIXED: your scan source was using obstacle_range/raytrace_range,
+# which aren't real Nav2 ObstacleLayer parameter names (that's the old
+# ROS1 costmap_2d naming). Nav2 silently ignores params it doesn't
+# recognize rather than erroring, so those two lines likely had zero
+# effect this whole time -- scan was running on Nav2's internal defaults.
+# Renamed to the real parameter names (obstacle_max_range, etc.) so your
+# intended 6.0/7.0 values actually take effect.
 local_costmap:
   local_costmap:
     ros__parameters:
@@ -134,21 +149,46 @@ local_costmap:
       obstacle_layer:
         plugin: nav2_costmap_2d::ObstacleLayer
         enabled: true
-        observation_sources: scan
+        observation_sources: scan camera
         scan:
           topic: scan
+          data_type: LaserScan
           max_obstacle_height: 0.45
           min_obstacle_height: 0.0
           clearing: true
           marking: true
-          obstacle_range: 6.0
-          raytrace_range: 7.0
+          obstacle_max_range: 6.0      # was "obstacle_range" (not a real param) -- fixed
+          obstacle_min_range: 0.0
+          raytrace_max_range: 7.0      # was "raytrace_range" (not a real param) -- fixed
+          raytrace_min_range: 0.0
+        camera:
+          topic: /oak/points
+          data_type: PointCloud2
+          clearing: true
+          marking: true
+          # Filters out the floor and anything above the robot's own
+          # height, so the ground plane itself doesn't get marked as a
+          # wall. 0.60 goes a bit above the scan's 0.45 ceiling so the
+          # camera can catch overhanging obstacles (e.g. a table edge)
+          # the LIDAR's flat plane would miss entirely.
+          min_obstacle_height: 0.05
+          max_obstacle_height: 0.60
+          obstacle_max_range: 2.5      # OAK-D Lite depth gets noisy beyond ~3-4m
+          obstacle_min_range: 0.20     # OAK-D Lite's minimum usable stereo range
+          raytrace_max_range: 2.5
+          raytrace_min_range: 0.20
       inflation_layer:
         plugin: nav2_costmap_2d::InflationLayer
         enabled: true
         inflation_radius: 0.6
         cost_scaling_factor: 3.0
 
+# --- global_costmap ---
+# UNCHANGED. Deliberately NOT adding the camera here -- see note above
+# local_costmap. Also has the same obstacle_range/raytrace_range naming
+# issue as scan did above; left as-is since you didn't ask for a global
+# costmap change, but worth knowing it's there if global obstacle
+# avoidance looks off later.
 global_costmap:
   global_costmap:
     ros__parameters:

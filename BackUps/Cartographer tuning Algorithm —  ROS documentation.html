@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients no-cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache svg inlinesvg smil svgclippaths" lang="en" style="" data-readthedocs-tool="sphinx" data-readthedocs-tool-theme="readthedocs"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Algorithm walkthrough for tuning — Cartographer ROS  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/documentation_options.js"></script>
+        <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/jquery.js"></script>
+        <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/underscore.js"></script>
+        <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/doctools.js"></script>
+        <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/language_data.js"></script>
+        
+    
+    <script type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/theme.js"></script>
+
+    
+
+  
+  <style type="text/css">:root, :host {
+  --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
+  --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free";
+  --fa-font-light: normal 300 1em/1 "Font Awesome 6 Pro";
+  --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Pro";
+  --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-regular: normal 400 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-light: normal 300 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-duotone-thin: normal 100 1em/1 "Font Awesome 6 Duotone";
+  --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+  --fa-font-sharp-solid: normal 900 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-regular: normal 400 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-light: normal 300 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-thin: normal 100 1em/1 "Font Awesome 6 Sharp";
+  --fa-font-sharp-duotone-solid: normal 900 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-regular: normal 400 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-light: normal 300 1em/1 "Font Awesome 6 Sharp Duotone";
+  --fa-font-sharp-duotone-thin: normal 100 1em/1 "Font Awesome 6 Sharp Duotone";
+}
+
+svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa {
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+.svg-inline--fa.fa-2xs {
+  vertical-align: 0.1em;
+}
+.svg-inline--fa.fa-xs {
+  vertical-align: 0em;
+}
+.svg-inline--fa.fa-sm {
+  vertical-align: -0.0714285705em;
+}
+.svg-inline--fa.fa-lg {
+  vertical-align: -0.2em;
+}
+.svg-inline--fa.fa-xl {
+  vertical-align: -0.25em;
+}
+.svg-inline--fa.fa-2xl {
+  vertical-align: -0.3125em;
+}
+.svg-inline--fa.fa-pull-left {
+  margin-right: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-pull-right {
+  margin-left: var(--fa-pull-margin, 0.3em);
+  width: auto;
+}
+.svg-inline--fa.fa-li {
+  width: var(--fa-li-width, 2em);
+  top: 0.25em;
+}
+.svg-inline--fa.fa-fw {
+  width: var(--fa-fw-width, 1.25em);
+}
+
+.fa-layers svg.svg-inline--fa {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.fa-layers-counter, .fa-layers-text {
+  display: inline-block;
+  position: absolute;
+  text-align: center;
+}
+
+.fa-layers {
+  display: inline-block;
+  height: 1em;
+  position: relative;
+  text-align: center;
+  vertical-align: -0.125em;
+  width: 1em;
+}
+.fa-layers svg.svg-inline--fa {
+  transform-origin: center center;
+}
+
+.fa-layers-text {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+}
+
+.fa-layers-counter {
+  background-color: var(--fa-counter-background-color, #ff253a);
+  border-radius: var(--fa-counter-border-radius, 1em);
+  box-sizing: border-box;
+  color: var(--fa-inverse, #fff);
+  line-height: var(--fa-counter-line-height, 1);
+  max-width: var(--fa-counter-max-width, 5em);
+  min-width: var(--fa-counter-min-width, 1.5em);
+  overflow: hidden;
+  padding: var(--fa-counter-padding, 0.25em 0.5em);
+  right: var(--fa-right, 0);
+  text-overflow: ellipsis;
+  top: var(--fa-top, 0);
+  transform: scale(var(--fa-counter-scale, 0.25));
+  transform-origin: top right;
+}
+
+.fa-layers-bottom-right {
+  bottom: var(--fa-bottom, 0);
+  right: var(--fa-right, 0);
+  top: auto;
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: bottom right;
+}
+
+.fa-layers-bottom-left {
+  bottom: var(--fa-bottom, 0);
+  left: var(--fa-left, 0);
+  right: auto;
+  top: auto;
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: bottom left;
+}
+
+.fa-layers-top-right {
+  top: var(--fa-top, 0);
+  right: var(--fa-right, 0);
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: top right;
+}
+
+.fa-layers-top-left {
+  left: var(--fa-left, 0);
+  right: auto;
+  top: var(--fa-top, 0);
+  transform: scale(var(--fa-layers-scale, 0.25));
+  transform-origin: top left;
+}
+
+.fa-1x {
+  font-size: 1em;
+}
+
+.fa-2x {
+  font-size: 2em;
+}
+
+.fa-3x {
+  font-size: 3em;
+}
+
+.fa-4x {
+  font-size: 4em;
+}
+
+.fa-5x {
+  font-size: 5em;
+}
+
+.fa-6x {
+  font-size: 6em;
+}
+
+.fa-7x {
+  font-size: 7em;
+}
+
+.fa-8x {
+  font-size: 8em;
+}
+
+.fa-9x {
+  font-size: 9em;
+}
+
+.fa-10x {
+  font-size: 10em;
+}
+
+.fa-2xs {
+  font-size: 0.625em;
+  line-height: 0.1em;
+  vertical-align: 0.225em;
+}
+
+.fa-xs {
+  font-size: 0.75em;
+  line-height: 0.0833333337em;
+  vertical-align: 0.125em;
+}
+
+.fa-sm {
+  font-size: 0.875em;
+  line-height: 0.0714285718em;
+  vertical-align: 0.0535714295em;
+}
+
+.fa-lg {
+  font-size: 1.25em;
+  line-height: 0.05em;
+  vertical-align: -0.075em;
+}
+
+.fa-xl {
+  font-size: 1.5em;
+  line-height: 0.0416666682em;
+  vertical-align: -0.125em;
+}
+
+.fa-2xl {
+  font-size: 2em;
+  line-height: 0.03125em;
+  vertical-align: -0.1875em;
+}
+
+.fa-fw {
+  text-align: center;
+  width: 1.25em;
+}
+
+.fa-ul {
+  list-style-type: none;
+  margin-left: var(--fa-li-margin, 2.5em);
+  padding-left: 0;
+}
+.fa-ul > li {
+  position: relative;
+}
+
+.fa-li {
+  left: calc(-1 * var(--fa-li-width, 2em));
+  position: absolute;
+  text-align: center;
+  width: var(--fa-li-width, 2em);
+  line-height: inherit;
+}
+
+.fa-border {
+  border-color: var(--fa-border-color, #eee);
+  border-radius: var(--fa-border-radius, 0.1em);
+  border-style: var(--fa-border-style, solid);
+  border-width: var(--fa-border-width, 0.08em);
+  padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);
+}
+
+.fa-pull-left {
+  float: left;
+  margin-right: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-pull-right {
+  float: right;
+  margin-left: var(--fa-pull-margin, 0.3em);
+}
+
+.fa-beat {
+  animation-name: fa-beat;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-bounce {
+  animation-name: fa-bounce;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+}
+
+.fa-fade {
+  animation-name: fa-fade;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-beat-fade {
+  animation-name: fa-beat-fade;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+}
+
+.fa-flip {
+  animation-name: fa-flip;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, ease-in-out);
+}
+
+.fa-shake {
+  animation-name: fa-shake;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin {
+  animation-name: fa-spin;
+  animation-delay: var(--fa-animation-delay, 0s);
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 2s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.fa-spin-reverse {
+  --fa-animation-direction: reverse;
+}
+
+.fa-pulse,
+.fa-spin-pulse {
+  animation-name: fa-spin;
+  animation-direction: var(--fa-animation-direction, normal);
+  animation-duration: var(--fa-animation-duration, 1s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, steps(8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-beat,
+.fa-bounce,
+.fa-fade,
+.fa-beat-fade,
+.fa-flip,
+.fa-pulse,
+.fa-shake,
+.fa-spin,
+.fa-spin-pulse {
+    animation-delay: -1ms;
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
+    transition-delay: 0s;
+    transition-duration: 0s;
+  }
+}
+@keyframes fa-beat {
+  0%, 90% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(var(--fa-beat-scale, 1.25));
+  }
+}
+@keyframes fa-bounce {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+  }
+  30% {
+    transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+  }
+  50% {
+    transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+  }
+  57% {
+    transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
+}
+@keyframes fa-fade {
+  50% {
+    opacity: var(--fa-fade-opacity, 0.4);
+  }
+}
+@keyframes fa-beat-fade {
+  0%, 100% {
+    opacity: var(--fa-beat-fade-opacity, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(var(--fa-beat-fade-scale, 1.125));
+  }
+}
+@keyframes fa-flip {
+  50% {
+    transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+  }
+}
+@keyframes fa-shake {
+  0% {
+    transform: rotate(-15deg);
+  }
+  4% {
+    transform: rotate(15deg);
+  }
+  8%, 24% {
+    transform: rotate(-18deg);
+  }
+  12%, 28% {
+    transform: rotate(18deg);
+  }
+  16% {
+    transform: rotate(-22deg);
+  }
+  20% {
+    transform: rotate(22deg);
+  }
+  32% {
+    transform: rotate(-12deg);
+  }
+  36% {
+    transform: rotate(12deg);
+  }
+  40%, 100% {
+    transform: rotate(0deg);
+  }
+}
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.fa-rotate-90 {
+  transform: rotate(90deg);
+}
+
+.fa-rotate-180 {
+  transform: rotate(180deg);
+}
+
+.fa-rotate-270 {
+  transform: rotate(270deg);
+}
+
+.fa-flip-horizontal {
+  transform: scale(-1, 1);
+}
+
+.fa-flip-vertical {
+  transform: scale(1, -1);
+}
+
+.fa-flip-both,
+.fa-flip-horizontal.fa-flip-vertical {
+  transform: scale(-1, -1);
+}
+
+.fa-rotate-by {
+  transform: rotate(var(--fa-rotate-angle, 0));
+}
+
+.fa-stack {
+  display: inline-block;
+  vertical-align: middle;
+  height: 2em;
+  position: relative;
+  width: 2.5em;
+}
+
+.fa-stack-1x,
+.fa-stack-2x {
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: var(--fa-stack-z-index, auto);
+}
+
+.svg-inline--fa.fa-stack-1x {
+  height: 1em;
+  width: 1.25em;
+}
+.svg-inline--fa.fa-stack-2x {
+  height: 2em;
+  width: 2.5em;
+}
+
+.fa-inverse {
+  color: var(--fa-inverse, #fff);
+}
+
+.sr-only,
+.fa-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.sr-only-focusable:not(:focus),
+.fa-sr-only-focusable:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.svg-inline--fa .fa-primary {
+  fill: var(--fa-primary-color, currentColor);
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa .fa-secondary {
+  fill: var(--fa-secondary-color, currentColor);
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-primary {
+  opacity: var(--fa-secondary-opacity, 0.4);
+}
+
+.svg-inline--fa.fa-swap-opacity .fa-secondary {
+  opacity: var(--fa-primary-opacity, 1);
+}
+
+.svg-inline--fa mask .fa-primary,
+.svg-inline--fa mask .fa-secondary {
+  fill: black;
+}</style><link rel="stylesheet" href="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/theme.css" type="text/css">
+  <link rel="stylesheet" href="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/pygments.css" type="text/css">
+    <link rel="index" title="Index" href="https://google-cartographer-ros.readthedocs.io/en/latest/genindex.html">
+    <link rel="search" title="Search" href="https://google-cartographer-ros.readthedocs.io/en/latest/search.html">
+    <link rel="next" title="Tuning methodology" href="https://google-cartographer-ros.readthedocs.io/en/latest/tuning.html">
+    <link rel="prev" title="Running Cartographer ROS on your own bag" href="https://google-cartographer-ros.readthedocs.io/en/latest/your_bag.html"> 
+
+<!-- RTD Extra Head -->
+
+
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-10-27T17:37:05Z", "builder": "sphinx", "canonical_url": null, "commit": "c138034d", "docroot": "/docs/source/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "algo_walkthrough", "programming_language": "cpp", "project": "google-cartographer-ros", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "google-cartographer-ros.readthedocs.org", "version": "latest"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+
+
+<!-- end RTD <extrahead> -->
+<script async="" type="text/javascript" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="google-cartographer-ros"><meta name="readthedocs-version-slug" content="latest"><meta name="readthedocs-resolver-filename" content="/algo_walkthrough.html"><meta name="readthedocs-http-status" content="200"><script id="ethicaladsjs" type="text/javascript" async="true" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/ethicalads.min.js"></script></head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="https://google-cartographer-ros.readthedocs.io/en/latest/index.html" class="icon icon-home"> Cartographer ROS
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/compilation.html">Compiling Cartographer ROS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/demos.html">Running Cartographer ROS on a demo bag</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/your_bag.html">Running Cartographer ROS on your own bag</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Algorithm walkthrough for tuning</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#input">Input</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#local-slam-1">Local SLAM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#global-slam">Global SLAM</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/tuning.html">Tuning methodology</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/assets_writer.html">Exploiting the map generated by Cartographer ROS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/going_further.html">Going further</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/getting_involved.html">Getting involved</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/configuration.html">Lua configuration reference documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/ros_api.html">ROS API reference documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/data.html">Public Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="https://google-cartographer-ros.readthedocs.io/en/latest/faq.html">Frequently asked questions</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="readthedocs-ea" class="raised ethical-rtd ethical-dark-theme" data-ea-type="readthedocs-sidebar" data-ea-manual="true" data-ea-publisher="readthedocs" data-ea-keywords="c++|readthedocs-project-57794|readthedocs-project-google-cartographer-ros" data-ea-campaign-types="community|house|paid"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="https://google-cartographer-ros.readthedocs.io/en/latest/index.html">Cartographer ROS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="https://google-cartographer-ros.readthedocs.io/en/latest/index.html">Docs</a> »</li>
+        
+      <li>Algorithm walkthrough for tuning</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/cartographer-project/cartographer_ros/blob/master/docs/source/algo_walkthrough.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="algorithm-walkthrough-for-tuning">
+<h1>Algorithm walkthrough for tuning<a class="headerlink" href="#algorithm-walkthrough-for-tuning" title="Permalink to this headline">¶</a></h1>
+<p>Cartographer is a complex system and tuning it requires a good 
+understanding of its inner working.
+This page tries to give an intuitive overview of the different 
+subsystems used by Cartographer along with their configuration values.
+If you are interested in more than an introduction to Cartographer, you 
+should refer to the Cartographer paper.
+It only describes the 2D SLAM but it defines rigourously most of the 
+concepts described here.
+Those concepts generally apply to 3D as well.</p>
+<p>W. Hess, D. Kohler, H. Rapp, and D. Andor,
+<a class="reference external" href="https://research.google.com/pubs/pub45466.html">Real-Time Loop Closure in 2D LIDAR SLAM</a>, in
+<em>Robotics and Automation (ICRA), 2016 IEEE International Conference on</em>.
+IEEE, 2016. pp. 1271–1278.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<a class="reference external image-reference" href="https://github.com/cartographer-project/cartographer/blob/master/docs/source/high_level_system_overview.png"><img alt="https://raw.githubusercontent.com/cartographer-project/cartographer/master/docs/source/high_level_system_overview.png" src="Cartographer%20tuning%20Algorithm%20%E2%80%94%20%20ROS%20documentation_files/high_level_system_overview.png"></a>
+<p>Cartographer can be seen as two separate, but related subsystems.
+The first one is <strong>local SLAM</strong> (sometimes also called <strong>frontend</strong> or local trajectory builder).
+Its job is to build a succession of <strong>submaps</strong>.
+Each submap is meant to be locally consistent but we accept that local SLAM drifts over time.
+Most of the local SLAM options can be found in <a class="reference external" href="https://github.com/cartographer-project/cartographer/blob/df337194e21f98f8c7b0b88dab33f878066d4b56/configuration_files/trajectory_builder_2d.lua">install_isolated/share/cartographer/configuration_files/trajectory_builder_2d.lua</a> for 2D and <a class="reference external" href="https://github.com/cartographer-project/cartographer/blob/df337194e21f98f8c7b0b88dab33f878066d4b56/configuration_files/trajectory_builder_3d.lua">install_isolated/share/cartographer/configuration_files/trajectory_builder_3d.lua</a> for 3D. (for the rest of this page we will refer to <cite>TRAJECTORY_BUILDER_nD</cite> for the common options)</p>
+<p>The other subsystem is <strong>global SLAM</strong> (sometimes called the <strong>backend</strong>).
+It runs in background threads and its main job is to find <strong>loop closure constraints</strong>.
+It does that by scan-matching <strong>scans</strong> (gathered in <strong>nodes</strong>) against submaps.
+It also incorporates other sensor data to get a higher level view and identify the most consistent global solution.
+In 3D, it also tries to find the direction of gravity.
+Most of its options can be found in <a class="reference external" href="https://github.com/cartographer-project/cartographer/blob/df337194e21f98f8c7b0b88dab33f878066d4b56/configuration_files/pose_graph.lua">install_isolated/share/cartographer/configuration_files/pose_graph.lua</a></p>
+<p>On a higher abstraction, the job of local SLAM is to generate good 
+submaps and the job of global SLAM is to tie them most consistently 
+together.</p>
+</div>
+<div class="section" id="input">
+<h2>Input<a class="headerlink" href="#input" title="Permalink to this headline">¶</a></h2>
+<p>Range finding sensors (for example: LIDARs) provide depth information
+ in multiple directions.
+However, some of the measurements are irrelevant for SLAM.
+If the sensor is partially covered with dust or if it is directed 
+towards a part of the robot, some of the measured distance can be 
+considered as noise for SLAM.
+On the other hand, some of the furthest measurements can also come from 
+undesired sources (reflection, sensor noise) and are irrelevant for SLAM
+ as well.
+To tackle those issue, Cartographer starts by applying a bandpass filter
+ and only keeps range values between a certain min and max range.
+Those min and max values should be chosen according to the 
+specifications of your robot and sensors.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">min_range</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">max_range</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In 2D, Cartographer replaces ranges further than max_range by <code class="docutils literal notranslate"><span class="pre">TRAJECTORY_BUILDER_2D.missing_data_ray_length</span></code>. It also provides a <code class="docutils literal notranslate"><span class="pre">max_z</span></code> and <code class="docutils literal notranslate"><span class="pre">min_z</span></code> values to filter 3D point clouds into a 2D cut.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Cartographer configuration files, every distance is defined in meters</p>
+</div>
+<p>Distances are measured over a certain period of time, while the robot
+ is actually moving.
+However, distances are delivered by sensors “in batch” in large ROS 
+messages.
+Each of the messages’ timestamp can be considered independently by 
+Cartographer to take into account deformations caused by the robot’s 
+motion.
+The more often Cartographer gets measurements, the better it becomes at 
+unwarping the measurements to assemble a single coherent scan that could
+ have been captured instantly.
+It is therefore strongly encouraged to provide as many range data (ROS 
+messages) by scan (a set of range data that can be matched against 
+another scan) as possible.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">num_accumulated_range_data</span>
+</pre></div>
+</div>
+<p>Range data is typically measured from a single point on the robot but
+ in multiple angles.
+This means that close surfaces (for instance the road) are very often 
+hit and provide lots of points.
+On the opposite, far objects are less often hit and offer less points.
+In order to reduce the computational weight of points handling, we 
+usually need to subsample point clouds.
+However, a simple random sampling would remove points from areas where 
+we already have a low density of measurements and the high-density areas
+ would still have more points than needed.
+To address that density problem, we can use a voxel filter that 
+downsamples raw points into cubes of a constant size and only keeps the 
+centroid of each cube.</p>
+<p>A small cube size will result in a more dense data representation, causing more computations.
+A large cube size will result in a data loss but will be much quicker.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">voxel_filter_size</span>
+</pre></div>
+</div>
+<p>After having applied a fixed-size voxel filter, Cartographer also applies an <strong>adaptive voxel filter</strong>.
+This filter tries to determine the optimal voxel size (under a max 
+length) to achieve a target number of points.
+In 3D, two adaptive voxel filters are used to generate a high resolution
+ and a low resolution point clouds, their usage will be clarified in <a class="reference internal" href="#local-slam"><span class="std std-ref">Local SLAM</span></a>.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="o">*</span><span class="n">adaptive_voxel_filter</span><span class="p">.</span><span class="n">max_length</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="o">*</span><span class="n">adaptive_voxel_filter</span><span class="p">.</span><span class="n">min_num_points</span>
+</pre></div>
+</div>
+<p>An Inertial Measurement Unit can be an useful source of information 
+for SLAM because it provides an accurate direction of gravity (hence, of
+ the ground) and a noisy but good overall indication of the robot’s 
+rotation.
+In order to filter the IMU noise, gravity is observed over a certain 
+amount of time.
+If you use 2D SLAM, range data can be handled in real-time without an 
+additional source of information so you can choose whether you’d like 
+Cartographer to use an IMU or not.
+With 3D SLAM, you need to provide an IMU because it is used as an 
+initial guess for the orientation of the scans, greatly reducing the 
+complexity of scan matching.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">use_imu_data</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">imu_gravity_time_constant</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Cartographer configuration files, every time value is defined in seconds</p>
+</div>
+</div>
+<div class="section" id="local-slam-1">
+<span id="local-slam"></span><h2>Local SLAM<a class="headerlink" href="#local-slam-1" title="Permalink to this headline">¶</a></h2>
+<p>Once a scan has been assembled and filtered from multiple range data, it is ready for the local SLAM algorithm.
+Local SLAM inserts a new scan into its current submap construction by <strong>scan matching</strong> using an initial guess from the <strong>pose extrapolator</strong>.
+The idea behind the pose extrapolator is to use sensor data of other 
+sensors besides the range finder to predict where the next scan should 
+be inserted into the submap.</p>
+<p>Two scan matching strategies are available:</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">CeresScanMatcher</span></code> takes the initial guess as prior and finds the best spot where the scan match fits the submap.
+It does this by interpolating the submap and sub-pixel aligning the scan.
+This is fast, but cannot fix errors that are significantly larger than the resolution of the submaps.
+If your sensor setup and timing is reasonable, using only the <code class="docutils literal notranslate"><span class="pre">CeresScanMatcher</span></code> is usually the best choice to make.</li>
+<li>The <code class="docutils literal notranslate"><span class="pre">RealTimeCorrelativeScanMatcher</span></code>
+ can be enabled if you do not have other sensors or you do not trust 
+them.
+It uses an approach similar to how scans are matched against submaps in 
+loop closure (described later), but instead it matches against the 
+current submap.
+The best match is then used as prior for the <code class="docutils literal notranslate"><span class="pre">CeresScanMatcher</span></code>.
+This scan matcher is very expensive and will essentially override any 
+signal from other sensors but the range finder, but it is robust in 
+feature rich environments.</li>
+</ul>
+<p>Either way, the <code class="docutils literal notranslate"><span class="pre">CeresScanMatcher</span></code>
+ can be configured to give a certain weight to each of its input.
+The weight is a measure of trust into your data, this can be seen as a 
+static covariance.
+The unit of weight parameters are dimensionless quantities and can’t be 
+compared between each others.
+The bigger the weight of a source of data is, the more emphasis 
+Cartographer will put on this source of data when doing scan matching.
+Sources of data include occupied space (points from the scan), 
+translation and rotation from the pose extrapolator (or <code class="docutils literal notranslate"><span class="pre">RealTimeCorrelativeScanMatcher</span></code>)</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">occupied_space_weight</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">occupied_space_weight_0</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">occupied_space_weight_1</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">translation_weight</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">rotation_weight</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In 3D, the <code class="docutils literal notranslate"><span class="pre">occupied_space_weight_0</span></code> and <code class="docutils literal notranslate"><span class="pre">occupied_space_weight_1</span></code> parameters are related, respectively, to the high resolution and low resolution filtered point clouds.</p>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">CeresScanMatcher</span></code> gets its name from <a class="reference external" href="http://ceres-solver.org/">Ceres Solver</a>, a library developed at Google to solve non-linear least squares problems.
+The scan matching problem is modelled as the minimization of such a problem with the <strong>motion</strong> (a transformation matrix) between two scans being a parameter to determine.
+Ceres optimizes the motion using a descent algorithm for a given number of iterations.
+Ceres can be configured to adapt the convergence speed to your own needs.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">ceres_solver_options</span><span class="p">.</span><span class="n">use_nonmonotonic_steps</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">ceres_solver_options</span><span class="p">.</span><span class="n">max_num_iterations</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">ceres_scan_matcher</span><span class="p">.</span><span class="n">ceres_solver_options</span><span class="p">.</span><span class="n">num_threads</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">RealTimeCorrelativeScanMatcher</span></code> can be toggled depending on the trust you have in your sensors.
+It works by searching for similar scans in a <strong>search window</strong>
+ which is defined by a maximum distance radius and a maximum angle 
+radius.
+When performing scan matching with scans found in this window, a 
+different weight can be chosen for the translational and rotational 
+components.
+You can play with those weight if, for example, you know that your robot
+ doesn’t rotate a lot.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">use_online_correlative_scan_matching</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">real_time_correlative_scan_matcher</span><span class="p">.</span><span class="n">linear_search_window</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">real_time_correlative_scan_matcher</span><span class="p">.</span><span class="n">angular_search_window</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">real_time_correlative_scan_matcher</span><span class="p">.</span><span class="n">translation_delta_cost_weight</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">real_time_correlative_scan_matcher</span><span class="p">.</span><span class="n">rotation_delta_cost_weight</span>
+</pre></div>
+</div>
+<p>To avoid inserting too many scans per submaps, once a motion between two scans is found by the scan matcher, it goes through a <strong>motion filter</strong>.
+A scan is dropped if the motion that led to it is not considered as significant enough.
+A scan is inserted into the current submap only if its motion is above a certain distance, angle or time threshold.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">motion_filter</span><span class="p">.</span><span class="n">max_time_seconds</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">motion_filter</span><span class="p">.</span><span class="n">max_distance_meters</span>
+<span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">motion_filter</span><span class="p">.</span><span class="n">max_angle_radians</span>
+</pre></div>
+</div>
+<p>A submap is considered as complete when the local SLAM has received a given amount of range data.
+Local SLAM drifts over time, global SLAM is used to fix this drift.
+Submaps must be small enough so that the drift inside them is below the resolution, so that they are locally correct.
+On the other hand, they should be large enough to be distinct for loop closure to work properly.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_nD</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">num_range_data</span>
+</pre></div>
+</div>
+<p>Submaps can store their range data in a couple of different data structures:
+The most widely used representation is called probability grids.
+However, in 2D, one can also choose to use Truncated Signed Distance Fields (TSDF).</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">grid_options_2d</span><span class="p">.</span><span class="n">grid_type</span>
+</pre></div>
+</div>
+<p>Probability grids cut out space into a 2D or 3D table where each cell
+ has a fixed size and contains the odds of being obstructed.
+Odds are updated according to “<em>hits</em>” (where the range data is measured) and “<em>misses</em>” (the free space between the sensor and the measured points).
+Both <em>hits</em> and <em>misses</em> can have a different weight in 
+occupancy probability calculations giving more or less trust to occupied
+ or free space measurements.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">range_data_inserter</span><span class="p">.</span><span class="n">probability_grid_range_data_inserter</span><span class="p">.</span><span class="n">hit_probability</span>
+<span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">range_data_inserter</span><span class="p">.</span><span class="n">probability_grid_range_data_inserter</span><span class="p">.</span><span class="n">miss_probability</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">range_data_inserter</span><span class="p">.</span><span class="n">hit_probability</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">range_data_inserter</span><span class="p">.</span><span class="n">miss_probability</span>
+</pre></div>
+</div>
+<p>In 2D, only one probability grid per submap is stored.
+In 3D, for scan matching performance reasons, two <em>hybrid</em> probability grids are used.
+(the term “hybrid” only refers to an internal tree-like data representation and is abstracted to the user)</p>
+<ul class="simple">
+<li>a low resolution hybrid grid for far measurements</li>
+<li>a high resolution hybrid grid for close measurements</li>
+</ul>
+<p>Scan matching starts by aligning far points of the low resolution 
+point cloud with the low resolution hybrid grid and then refines the 
+pose by aligning the close high resolution points with the high 
+resolution hybrid grid.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">TRAJECTORY_BUILDER_2D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">grid_options_2d</span><span class="p">.</span><span class="n">resolution</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">high_resolution</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">submaps</span><span class="p">.</span><span class="n">low_resolution</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">high_resolution_adaptive_voxel_filter</span><span class="p">.</span><span class="n">max_range</span>
+<span class="n">TRAJECTORY_BUILDER_3D</span><span class="p">.</span><span class="n">low_resolution_adaptive_voxel_filter</span><span class="p">.</span><span class="n">max_range</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cartographer ROS provides an RViz plugin to visualize 
+submaps. You can select the submaps you want to see from their number. 
+In 3D, RViz only shows 2D projections of the 3D hybrid probability grids
+ (in grayscale). Options are made available in RViz’s left pane to 
+switch between the low and high resolution hybrid grids visualization.</p>
+</div>
+<p><strong>TODO</strong>: <em>Documenting TSDF configuration</em></p>
+</div>
+<div class="section" id="global-slam">
+<h2>Global SLAM<a class="headerlink" href="#global-slam" title="Permalink to this headline">¶</a></h2>
+<p>While the local SLAM generates its succession of submaps, a global optimization (usually referred to as “<em>the optimization problem</em>” or “<em>sparse pose adjustment</em>”)
+ task runs in background.
+Its role is to re-arrange submaps between each other so that they form a
+ coherent global map.
+For instance, this optimization is in charge of altering the currently 
+built trajectory to properly align submaps with regards to loop 
+closures.</p>
+<p>The optimization is run in batches once a certain number of 
+trajectory nodes was inserted. Depending on how frequently you need to 
+run it, you can tune the size of these batches.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimize_every_n_nodes</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Setting POSE_GRAPH.optimize_every_n_nodes to 0 is a 
+handy way to disable global SLAM and concentrate on the behavior of 
+local SLAM. This is usually one of the first thing to do to tune 
+Cartographer.</p>
+</div>
+<p>The global SLAM is a kind of “<em>GraphSLAM</em>”, it is essentially a pose graph optimization which works by building <strong>constraints</strong> between <strong>nodes</strong> and submaps and then optimizing the resulting constraints graph.
+Constraints can intuitively be thought of as little ropes tying all nodes together.
+The sparse pose adjustment fastens those ropes altogether.
+The resulting net is called the “<em>pose graph</em>”.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Constraints can be visualized in RViz, it is very handy to tune global SLAM. One can also toggle <code class="docutils literal notranslate"><span class="pre">POSE_GRAPH.constraint_builder.log_matches</span></code> to get regular reports of the constraints builder formatted as histograms.</p>
+</div>
+<ul class="simple">
+<li>Non-global constraints (also known as intra submaps constraints) are
+ built automatically between nodes that are closely following each other
+ on a trajectory.
+Intuitively, those “<em>non-global ropes</em>” keep the local structure of the trajectory coherent.</li>
+<li>Global constraints (also referred to as loop closure constraints or 
+inter submaps constraints) are regularly searched between a new submap 
+and previous nodes that are considered “<em>close enough</em>” in space (part of a certain <strong>search window</strong>) and a strong fit (a good match when running scan matching).
+Intuitively, those “<em>global ropes</em>” introduce knots in the structure and firmly bring two strands closer.</li>
+</ul>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">max_constraint_distance</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher</span><span class="p">.</span><span class="n">linear_search_window</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher_3d</span><span class="p">.</span><span class="n">linear_xy_search_window</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher_3d</span><span class="p">.</span><span class="n">linear_z_search_window</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher</span><span class="o">*</span><span class="p">.</span><span class="n">angular_search_window</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In practice, global constraints can do more than finding
+ loop closures on a single trajectory. They can also align different 
+trajectories recorded by multiple robots but we will keep this usage and
+ the parameters related to “global localization” out of the scope of 
+this document.</p>
+</div>
+<p>To limit the amount of constraints (and computations), Cartographer 
+only considers a subsampled set of all close nodes for constraints 
+building.
+This is controlled by a sampling ratio constant.
+Sampling too few nodes could result in missed constraints and 
+ineffective loop closures.
+Sampling too many nodes would slow the global SLAM down and prevent 
+real-time loop closures.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">sampling_ratio</span>
+</pre></div>
+</div>
+<p>When a node and a submap are considered for constraint building, they go through a first scan matcher called the <code class="docutils literal notranslate"><span class="pre">FastCorrelativeScanMatcher</span></code>.
+This scan matcher has been specifically designed for Cartographer and makes real-time loop closures scan matching possible.
+The <code class="docutils literal notranslate"><span class="pre">FastCorrelativeScanMatcher</span></code> relies on a “<em>Branch and bound</em>” mechanism to work at different grid resolutions and efficiently eliminate incorrect matchings.
+This mechanism is extensively presented in the Cartographer paper presented earlier in this document.
+It works on an exploration tree whose depth can be controlled.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher</span><span class="p">.</span><span class="n">branch_and_bound_depth</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher_3d</span><span class="p">.</span><span class="n">branch_and_bound_depth</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">fast_correlative_scan_matcher_3d</span><span class="p">.</span><span class="n">full_resolution_depth</span>
+</pre></div>
+</div>
+<p>Once the <code class="docutils literal notranslate"><span class="pre">FastCorrelativeScanMatcher</span></code> has a good enough proposal (above a minimum score of matching), it is then fed into a Ceres Scan Matcher to refine the pose.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">min_score</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">ceres_scan_matcher_3d</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">ceres_scan_matcher</span>
+</pre></div>
+</div>
+<p>When Cartographer runs <em>the optimization problem</em>, Ceres is used to rearrange submaps according to multiple <em>residuals</em>.
+Residuals are calculated using weighted cost functions.
+The global optimization has cost functions to take into account plenty 
+of data sources: the global (loop closure) constraints, the non-global 
+(matcher) constraints, the IMU acceleration and rotation measurements, 
+the local SLAM rough pose estimations, an odometry source or a fixed 
+frame (such as a GPS system).
+The weights and Ceres options can be configured as described in the <a class="reference internal" href="#local-slam"><span class="std std-ref">Local SLAM</span></a> section.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">loop_closure_translation_weight</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">constraint_builder</span><span class="p">.</span><span class="n">loop_closure_rotation_weight</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">matcher_translation_weight</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">matcher_rotation_weight</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimization_problem</span><span class="p">.</span><span class="o">*</span><span class="n">_weight</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimization_problem</span><span class="p">.</span><span class="n">ceres_solver_options</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">One can find useful information about the residuals used in the optimization problem by toggling <code class="docutils literal notranslate"><span class="pre">POSE_GRAPH.log_residual_histograms</span></code></p>
+</div>
+<p>As part of its IMU residual, the optimization problem gives some 
+flexibility to the IMU pose and, by default, Ceres is free to optimize 
+the extrinsic calibration between your IMU and tracking frame.
+If you don’t trust your IMU pose, the results of Ceres’ global 
+optimization can be logged and used to improve your extrinsic 
+calibration.
+If Ceres doesn’t optimize your IMU pose correctly and you trust your 
+extrinsic calibration enough, you can make this pose constant.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimization_problem</span><span class="p">.</span><span class="n">log_solver_summary</span>
+<span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimization_problem</span><span class="p">.</span><span class="n">use_online_imu_extrinsics_in_3d</span>
+</pre></div>
+</div>
+<p>In residuals, the influence of outliers is handled by a <strong>Huber loss</strong> function configured with a certain a Huber scale.
+The bigger the Huber scale, <a class="reference external" href="https://github.com/ceres-solver/ceres-solver/blob/0d3a84fce553c9f7aab331f0895fa7b1856ef5ee/include/ceres/loss_function.h#L172">the higher is the impact</a> of (potential) outliers.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">optimization_problem</span><span class="p">.</span><span class="n">huber_scale</span>
+</pre></div>
+</div>
+<p>Once the trajectory is finished, Cartographer runs a new global 
+optimization with, typically, a lot more iterations than previous global
+ optimizations.
+This is done to polish the final result of Cartographer and usually does
+ not need to be real-time so a large number of iterations is often a 
+right choice.</p>
+<div class="highlight-lua notranslate"><div class="highlight"><pre><span></span><span class="n">POSE_GRAPH</span><span class="p">.</span><span class="n">max_num_final_iterations</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="https://google-cartographer-ros.readthedocs.io/en/latest/tuning.html" class="btn btn-neutral float-right" title="Tuning methodology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="https://google-cartographer-ros.readthedocs.io/en/latest/your_bag.html" class="btn btn-neutral float-left" title="Running Cartographer ROS on your own bag" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2022 The Cartographer Authors
+      
+        <span class="commit">
+          Revision <code>c138034d</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org/">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+
+<readthedocs-flyout></readthedocs-flyout><readthedocs-notification class="raised toast"></readthedocs-notification><readthedocs-search class="raised floating"></readthedocs-search><readthedocs-hotkeys></readthedocs-hotkeys></body></html>

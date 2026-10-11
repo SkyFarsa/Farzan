@@ -1,0 +1,69 @@
+# oakd_params.yaml
+#
+# Parameters for depthai_ros_driver's pointcloud.launch.py, tuned for:
+#   - RPi4 as the host (keep CPU/USB bandwidth low — it's shared with LIDAR,
+#     odom, IMU, Nav2 and Cartographer on this robot)
+#   - Obstacle avoidance only (not visual SLAM, not high-quality imaging)
+#   - Feeding a PointCloud2 into Nav2's obstacle_layer
+#
+# CHANGED FROM FIRST ATTEMPT: we were using camera.launch.py with
+# pointcloud.enable:=true, which loads depth_image_proc::PointCloudXyzrgbNode
+# — that needs a synced RGB stream to color every point, which is expensive
+# (RGB rectify + sync + per-point color) and was likely why /oak/points was
+# only publishing at ~0.35 Hz once Nav2/Cartographer were also running.
+#
+# Switched to pointcloud.launch.py instead, which loads
+# depth_image_proc::PointCloudXyziNode. This gets its "intensity" channel
+# from the right camera's rectified image (right/image_rect) — a stream the
+# stereo pipeline already produces for depth — instead of a separate RGB
+# camera. No RGB stream needed at all now, so it's disabled below.
+#
+# Launch with:
+#   ros2 launch depthai_ros_driver pointcloud.launch.py \
+#       camera_model:=OAK-D-LITE \
+#       params_file:=oakd_params.yaml
+#
+# NOTE: pointcloud.launch.py's own default params file (pcl.yaml) sets a few
+# things we need to carry over ourselves, since passing params_file replaces
+# it rather than merging with it:
+#   - camera.i_nn_type: none        -> disables the on-device mobilenet NN
+#     pipeline (the "NN Family: mobilenet" / /oak/nn/spatial_detections
+#     we've seen in every log). We never needed this for obstacle avoidance;
+#     it's been running as dead weight the whole time.
+#   - stereo.i_align_depth: true    -> depth aligned to the intensity frame
+#   - stereo.i_right_rect_publish_topic: true -> the PointCloudXyziNode's
+#     intensity input source
+#   - stereo.i_right_rect_synced: false
+
+/**:
+  ros__parameters:
+    camera:
+      i_pipeline_type: RGBD
+      i_nn_type: none            # was silently running a mobilenet NN pipeline we never used
+      # Your URDF (my_robot.urdf.xacro) already defines camera_link with the
+      # correct pose (camera_height, camera_tilt). Don't let the driver publish
+      # a second, competing TF for the same frame.
+      i_publish_tf_from_calibration: false
+
+    stereo:
+      i_width: 320
+      i_height: 200               # dropped from 640x400 — RPi4 can't keep up with depth_image_proc
+                                   # at that resolution even standalone (measured ~0.66 Hz). 1/4 the
+                                   # pixels of 640x400 should get us much closer to a usable rate.
+      i_fps: 15.0                 # request stays high; actual achieved rate is CPU-bound, not this
+      i_depth_filter_size: 5
+      i_subpixel: false           # keep off for now — host CPU is shared with Nav2/Cartographer
+      i_lr_check: true            # left-right check reduces false-positive depth (worth the cost)
+      i_publish_topic: true
+      i_max_q_size: 2             # keep queue shallow — don't let stale frames pile up
+      i_align_depth: true
+      i_board_socket_id: 2        # MISSING BEFORE — this is what i_align_depth aligns *to*.
+                                   # Without it, alignment defaulted to the RGB socket (unused now),
+                                   # while PointCloudXyziNode's intensity input comes from the right
+                                   # camera (socket 2) -> frame_id mismatch warning in the logs.
+                                   # 2 = right camera (CAM_C), matching Luxonis's own pcl.yaml.
+      i_right_rect_publish_topic: true   # feeds PointCloudXyziNode's intensity input
+      i_right_rect_synced: false
+
+    rgb:
+      i_publish_topic: false      # no longer needed — PointCloudXyziNode uses the right camera, not RGB

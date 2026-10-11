@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:property name="lidar_radius" value="0.05" />
+    <xacro:property name="lidar_length" value="0.01" />
+
+    <link name="lidar_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${lidar_radius}" length="${lidar_length}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="red" />
+        </visual>
+        <xacro:macro name="lidar_inertia" params="m r l xyz rpy">
+            <inertial>
+                <origin xyz="${xyz}" rpy="${rpy}" />
+                <mass value="${m}" />
+                <inertia ixx="${(m/12) * (3*r*r + l*l)}" ixy="0.0" ixz="0.0"
+                         iyy="${(m/12) * (3*r*r + l*l)}" iyz="0.0"
+                         izz="${(m/2) * (r*r)}" />
+            </inertial>
+        </xacro:macro>    
+    
+        <xacro:lidar_inertia m="0.1" r="${lidar_radius}" l="${lidar_length}"
+                             xyz="0 0 0" rpy="0 0 0" />
+
+
+    </link>
+
+    <joint name="base_lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_link"/>
+        <origin xyz="0 0 0.105" rpy="0 0 0"/>
+    </joint>
+
+    <gazebo reference="lidar_link">
+        <material>Gazebo/Red</material>
+        <sensor name="lidar" type="ray">
+            <always_on>true</always_on>
+            <visualize>true</visualize>
+            <update_rate>5</update_rate>
+            <ray>
+              <scan>
+                <horizontal>
+                  <samples>360</samples>
+                  <resolution>1.00000</resolution>
+                  <min_angle>0.000000</min_angle>
+                  <max_angle>6.280000</max_angle>
+                </horizontal>
+              </scan>
+              <range>
+                <min>0.120000</min>
+                <max>3.5</max>
+                <resolution>0.015000</resolution>
+              </range>
+              <noise>
+                <type>gaussian</type>
+                <mean>0.0</mean>
+                <stddev>0.01</stddev>
+              </noise>
+            </ray>
+            <plugin name="scan" filename="libgazebo_ros_ray_sensor.so">
+              <ros>
+                <remapping>~/out:=scan</remapping>
+              </ros>
+              <output_type>sensor_msgs/LaserScan</output_type>
+              <frame_name>lidar_link</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+</robot>

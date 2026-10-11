@@ -7,19 +7,31 @@ options = {
 
   map_frame = "map",
 
-  -- Track the robot base directly (no IMU)
+  -- Keep tracking on base_link for now, NOT imu_link. Get this TF-ownership
+  -- fix verified working first, then re-enable IMU fusion as its own
+  -- separate, isolated test (see notes at the bottom of this file).
   tracking_frame = "base_link",
 
-  -- Cartographer publishes the robot pose in base_link
-  published_frame = "base_link",
+  -- FIXED: this was "base_link" together with provide_odom_frame=true below,
+  -- which made cartographer broadcast its OWN odom -> base_link transform
+  -- every cycle - directly colliding with serial_odom_node.py, which also
+  -- broadcasts odom -> base_link from wheel encoders. Two nodes publishing
+  -- the same TF edge from two different pose estimates is what causes
+  -- exactly the jumping/shaking you're seeing right now.
+  published_frame = "odom",
 
-  -- Cartographer will create the odom frame
   odom_frame = "odom",
-  provide_odom_frame = true,
+
+  -- FIXED: was `true`. With published_frame = "odom", this must be false -
+  -- cartographer now only owns map -> odom. serial_odom_node keeps owning
+  -- odom -> base_link, so there's exactly one publisher per TF edge.
+  provide_odom_frame = false,
 
   publish_frame_projected_to_2d = true,
 
-  use_odometry = false,  -- your robot isn't publishing wheel odom yet
+  -- CONFIRMED WORKING: /odom verified at ~19.6Hz with sane data via
+  -- `ros2 topic hz/echo/info -v` earlier in this debugging session.
+  use_odometry = true,
   use_nav_sat = false,
   use_landmarks = false,
 
@@ -45,6 +57,13 @@ MAP_BUILDER.use_trajectory_builder_2d = true
 TRAJECTORY_BUILDER_2D.min_range = 0.12
 TRAJECTORY_BUILDER_2D.max_range = 3.5
 TRAJECTORY_BUILDER_2D.missing_data_ray_length = 3.0
+
+-- IMPORTANT: leave this false for THIS test, even though you just
+-- reconnected the IMU. Re-enabling IMU fusion needs tracking_frame changed
+-- to "imu_link" too, and that's a second variable - change one thing at a
+-- time. Confirm the jump/shake is gone with just the TF-ownership fix
+-- first, THEN come back and flip this + tracking_frame together as an
+-- isolated follow-up test.
 TRAJECTORY_BUILDER_2D.use_imu_data = false
 
 TRAJECTORY_BUILDER_2D.use_online_correlative_scan_matching = true

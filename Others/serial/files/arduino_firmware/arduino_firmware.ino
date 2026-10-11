@@ -1,0 +1,125 @@
+// -------------------------
+// ARDUINO FIRMWARE (debugged)
+// For serial_odom_node.py
+//
+// Fixes applied vs original:
+//   1. Encoder print bug fixed (stray "x" char, missing "l" print)
+//   2. Added "R" serial command to zero tick counters (needed by /reset_odom service)
+// -------------------------
+
+// Motor pins
+#define L_IN1 7
+#define L_IN2 6
+#define R_IN1 5
+#define R_IN2 4
+
+// ENABLE PINS (PWM SPEED CONTROL)
+#define ENA 8   // Left motor enable
+#define ENB 9   // Right motor enable
+
+// Encoders
+#define ENC_L_A 18
+#define ENC_L_B 19
+#define ENC_R_A 3
+#define ENC_R_B 2
+
+volatile long left_ticks = 0;
+volatile long right_ticks = 0;
+unsigned long last_send = 0;
+
+void leftISR() {
+  if (digitalRead(ENC_L_B)) left_ticks++;
+  else left_ticks--;
+}
+
+void rightISR() {
+  if (digitalRead(ENC_R_B)) right_ticks++;
+  else right_ticks--;
+}
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(L_IN1, OUTPUT);
+  pinMode(L_IN2, OUTPUT);
+  pinMode(R_IN1, OUTPUT);
+  pinMode(R_IN2, OUTPUT);
+  pinMode(ENA, OUTPUT);
+  pinMode(ENB, OUTPUT);
+
+  // Start stopped
+  analogWrite(ENA, 0);
+  analogWrite(ENB, 0);
+
+  pinMode(ENC_L_A, INPUT_PULLUP);
+  pinMode(ENC_L_B, INPUT_PULLUP);
+  pinMode(ENC_R_A, INPUT_PULLUP);
+  pinMode(ENC_R_B, INPUT_PULLUP);
+
+  attachInterrupt(digitalPinToInterrupt(ENC_L_A), leftISR, RISING);
+  attachInterrupt(digitalPinToInterrupt(ENC_R_A), rightISR, RISING);
+}
+
+void setMotor(int in1, int in2, int enPin, int pwm) {
+  pwm = constrain(pwm, -255, 255);
+  if (pwm > 0) {
+    digitalWrite(in1, HIGH);
+    digitalWrite(in2, LOW);
+    analogWrite(enPin, pwm);
+  } else if (pwm < 0) {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, HIGH);
+    analogWrite(enPin, -pwm);
+  } else {
+    digitalWrite(in1, LOW);
+    digitalWrite(in2, LOW);
+    analogWrite(enPin, 0);
+  }
+}
+
+void setMotors(int pwmL, int pwmR) {
+  setMotor(L_IN1, L_IN2, ENA, pwmL);
+  setMotor(R_IN1, R_IN2, ENB, pwmR);
+}
+
+void loop() {
+  // ---- Read Serial Commands ----
+  if (Serial.available()) {
+    String s = Serial.readStringUntil('\n');
+    s.trim();
+
+    if (s.startsWith("P")) {
+      int first = s.indexOf(',');
+      int second = s.indexOf(',', first + 1);
+      if (first > 0 && second > first) {
+        int pwmL = s.substring(first + 1, second).toInt();
+        int pwmR = s.substring(second + 1).toInt();
+        setMotors(pwmL, pwmR);
+      }
+    } else if (s == "R") {
+      // Reset tick counters (called by serial_odom_node's /reset_odom service)
+      noInterrupts();
+      left_ticks = 0;
+      right_ticks = 0;
+      interrupts();
+    }
+  }
+
+  // ---- Send Encoder Data Every 50ms ----
+  unsigned long now = millis();
+  if (now - last_send > 50) {
+    noInterrupts();
+    long l = left_ticks;
+    long r = right_ticks;
+    interrupts();
+
+    Serial.print("E,");
+    Serial.print(l);
+    Serial.print(",");
+    Serial.print(r);
+    Serial.print(",");
+    Serial.println(now);
+
+    last_send = now;
+  }
+}

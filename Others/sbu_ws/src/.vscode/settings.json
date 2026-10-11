@@ -1,0 +1,19 @@
+{
+    "ros.distro": "humble",
+    "python.autoComplete.extraPaths": [
+        "/home/sobhan/rtabmap_ws/install/rtabmap_python/lib/python3.10/site-packages",
+        "/home/sobhan/rtabmap_ws/install/rtabmap_msgs/local/lib/python3.10/dist-packages",
+        "/home/sobhan/yolobot/install/yolov8_msgs/local/lib/python3.10/dist-packages",
+        "/home/sobhan/ros2_ws/install/my_py_pkg/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/sobhan/rtabmap_ws/install/rtabmap_python/lib/python3.10/site-packages",
+        "/home/sobhan/rtabmap_ws/install/rtabmap_msgs/local/lib/python3.10/dist-packages",
+        "/home/sobhan/yolobot/install/yolov8_msgs/local/lib/python3.10/dist-packages",
+        "/home/sobhan/ros2_ws/install/my_py_pkg/lib/python3.10/site-packages",
+        "/opt/ros/humble/lib/python3.10/site-packages",
+        "/opt/ros/humble/local/lib/python3.10/dist-packages"
+    ]
+}

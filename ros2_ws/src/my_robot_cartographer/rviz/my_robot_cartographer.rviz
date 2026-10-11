@@ -5,7 +5,7 @@ Panels:
     Property Tree Widget:
       Expanded: ~
       Splitter Ratio: 0.5
-    Tree Height: 215
+    Tree Height: 191
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -53,9 +53,9 @@ Visualization Manager:
       Enabled: true
       Invert Rainbow: false
       Max Color: 255; 255; 255
-      Max Intensity: 244
+      Max Intensity: 243
       Min Color: 0; 0; 0
-      Min Intensity: 119
+      Min Intensity: 174
       Name: LaserScan
       Position Transformer: XYZ
       Selectable: true
@@ -138,7 +138,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 10.233990669250488
+      Distance: 4.319587707519531
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -161,16 +161,16 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 1016
+  Height: 953
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd0000000100000000000001cb0000039efc0200000004fb000000100044006900730070006c006100790073010000003d0000015a000000c900fffffffb0000001200530065006c0065006300740069006f006e010000019d000000a80000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073010000024b000000aa0000005c00fffffffb0000000a0056006900650077007301000002fb000000e0000000a400ffffff000005690000039e00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd0000000100000000000001cb0000035ffc0200000004fb000000100044006900730070006c006100790073010000003d00000142000000c900fffffffb0000001200530065006c0065006300740069006f006e01000001850000009c0000005c00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007301000002270000009f0000005c00fffffffb0000000a0056006900650077007301000002cc000000d0000000a400ffffff000005af0000035f00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1850
-  X: 70
+  Width: 1920
+  X: 0
   Y: 27
