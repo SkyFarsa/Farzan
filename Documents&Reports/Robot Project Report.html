@@ -1,0 +1,359 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Robot Project Report</title>
+<style>
+:root{--bg:#fff;--fg:#1d2330;--mut:#5d667a;--card:#f4f6fa;--line:#dde2ec;--acc:#2f6fed;--ok:#1f9d63;--warn:#d98a00;--bad:#d64545;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--fg:#e6e9f0;--mut:#9aa3b5;--card:#1b2029;--line:#2c3341;--acc:#6b9bff;--ok:#3cc98a;--warn:#f0a83a;--bad:#ef6b6b}}
+:root[data-theme="dark"]{--bg:#12151c;--fg:#e6e9f0;--mut:#9aa3b5;--card:#1b2029;--line:#2c3341;--acc:#6b9bff;--ok:#3cc98a;--warn:#f0a83a;--bad:#ef6b6b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:860px;margin:0 auto;padding:28px 18px 60px}
+h1{font-size:2rem;margin:.2em 0}h2{margin:2em 0 .5em;padding-bottom:.25em;border-bottom:1px solid var(--line);font-size:1.4rem}h3{margin:1.4em 0 .3em;font-size:1.05rem}
+.sub{color:var(--mut)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:16px 0}
+.k{background:var(--card);border-radius:10px;padding:12px 14px}.k b{display:block;font-size:1.5rem;color:var(--acc)}.k span{color:var(--mut);font-size:.85rem}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.92rem}th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{background:var(--card)}
+code{background:var(--card);padding:1px 5px;border-radius:4px;font-size:.88em}
+.tag{display:inline-block;padding:1px 8px;border-radius:99px;font-size:.78rem;color:#fff}
+.ok{background:var(--ok)}.warn{background:var(--warn)}.bad{background:var(--bad)}
+.card{background:var(--card);border-radius:10px;padding:14px 16px;margin:12px 0}
+svg{max-width:100%;height:auto}svg text{fill:var(--fg);font-family:inherit}
+pre.mermaid{background:var(--card);border-radius:10px;padding:12px;overflow-x:auto}
+</style>
+</head>
+<body><main>
+<h1>Robot Project Report</h1>
+<p class="sub">Differential-drive robot · ROS 2 Humble · RPi4 + Arduino Due + Remote PC SLAM · Status as of 30 Sep 2026</p>
+
+<div class="card"><b>Source code:</b> <a href="https://github.com/SkyFarsa/Farzan">github.com/SkyFarsa/Farzan</a><br>
+<code>git clone https://github.com/SkyFarsa/Farzan.git</code> &middot; SSH: <code>git@github.com:SkyFarsa/Farzan.git</code><br>
+<span class="sub">Contains the firmware, ROS 2 nodes, launch and URDF files, Cartographer configs, test tools and this project's notes.</span></div>
+<div class="grid">
+<div class="k"><b>0.48 m</b><span>Wheel base</span></div>
+<div class="k"><b>203</b><span>Ticks / rev (single-edge)</span></div>
+<div class="k"><b>1.86 mm</b><span>Distance per tick</span></div>
+<div class="k"><b>10 Hz</b><span>LIDAR scan rate</span></div>
+</div>
+
+<h2>1. Summary</h2>
+<p>The robot is a direct-drive (no gearbox) differential platform. An RPi4 runs sensor drivers and odometry; an Arduino Due handles motor PWM and encoder counting; SLAM (Cartographer), RViz2 and planned Nav2 run on a remote PC over WiFi (<code>ROS_DOMAIN_ID=30</code>, ~2–4 ms ping). Major resolved items: encoder serial corruption in firmware, IMU I2C init failure, and RViz LIDAR drops (traced to IMU CPU load). Remaining risks are mainly <b>configuration inconsistencies between files</b> (section 6) and hardware-level items (twitch at boot, cable quality).</p>
+
+<h2>2. Architecture</h2>
+<pre class="mermaid">
+flowchart LR
+  subgraph RPi4
+    LID[ld19_lidar] -->|/scan| NET
+    IMU[icm20948 node] -->|/imu| NET
+    ODO[serial_odom_node] -->|/odom, TF| NET
+    RSP[robot_state_publisher] -->|/tf_static| NET
+  end
+  DUE[Arduino Due] <-->|USB serial 115200| ODO
+  MOT[Motors + encoders] <--> DUE
+  NET((DDS over WiFi)) --> CARTO[Cartographer]
+  NET --> RVIZ[RViz2]
+  NET --> NAV[Nav2 - planned]
+</pre>
+
+<h2>3. Hardware</h2>
+<div class="scroll"><table>
+<tr><th>Component</th><th>Detail</th></tr>
+<tr><td>Compute</td><td>Raspberry Pi 4 (user <code>rislab</code>, 192.168.100.123)</td></tr>
+<tr><td>Controller</td><td>Arduino Due; L298N driver (ENA/ENB PWM)</td></tr>
+<tr><td>Motors</td><td>24 V DC, direct drive</td></tr>
+<tr><td>Encoders</td><td>Omron E6A2-CW3C, 12 V, channel A RISING only</td></tr>
+<tr><td>Wheels</td><td>Ø 12 cm, base 0.48 m</td></tr>
+<tr><td>Sensors</td><td>LD19 LIDAR, ICM20948 IMU (0x69), OAK-D Lite camera</td></tr>
+<tr><td>Remote PC</td><td>User <code>RisLab-Remote</code>, 192.168.100.144</td></tr>
+</table></div>
+
+<h2>4. Odometry &amp; calibration</h2>
+<p>Wheel circumference = 2π·0.06 = 0.377 m, so one tick = 0.377 / 203 ≈ <b>1.86 mm</b> (≈ 538 ticks per metre). At the placeholder <code>MAX_WHEEL_SPEED</code> of 0.5 m/s, each wheel produces ≈ 269 ticks/s, or about 13 ticks per 50 ms serial packet.</p>
+<svg viewBox="0 0 560 250" role="img" aria-label="Ticks per second versus wheel speed">
+<text x="280" y="20" text-anchor="middle" font-weight="600">Expected encoder ticks/s vs wheel speed</text>
+<line x1="60" y1="210" x2="530" y2="210" stroke="var(--mut)"/><line x1="60" y1="40" x2="60" y2="210" stroke="var(--mut)"/>
+<line x1="60" y1="210" x2="500" y2="60" stroke="var(--acc)" stroke-width="3"/>
+<g font-size="11" text-anchor="middle"><text x="60" y="226">0</text><text x="170" y="226">0.125</text><text x="280" y="226">0.25</text><text x="390" y="226">0.375</text><text x="500" y="226">0.5 m/s</text></g>
+<g font-size="11" text-anchor="end"><text x="54" y="214">0</text><text x="54" y="136">135</text><text x="54" y="64">269</text></g>
+<circle cx="500" cy="60" r="5" fill="var(--acc)"/><text x="492" y="50" font-size="11" text-anchor="end">269 ticks/s</text>
+</svg>
+<p class="sub">Linear relation: ticks/s = v × 538. Calibration used 1 manual revolution; 5–10 revolutions divided by N would be more precise.</p>
+
+<h2>5. Issues found &amp; status</h2>
+<h3>RViz LIDAR drops: CPU impact of the IMU node</h3>
+<svg viewBox="0 0 560 230" role="img" aria-label="Load average with and without IMU node">
+<text x="280" y="20" text-anchor="middle" font-weight="600">RPi4 load average (A/B test)</text>
+<line x1="80" y1="190" x2="500" y2="190" stroke="var(--mut)"/>
+<rect x="150" y="43" width="100" height="147" fill="var(--bad)" rx="4"/><text x="200" y="36" text-anchor="middle" font-size="13">≈ 3.5</text><text x="200" y="210" text-anchor="middle" font-size="12">IMU @ 100 Hz</text>
+<rect x="330" y="106" width="100" height="84" fill="var(--ok)" rx="4"/><text x="380" y="99" text-anchor="middle" font-size="13">≈ 2.0</text><text x="380" y="210" text-anchor="middle" font-size="12">IMU disabled</text>
+</svg>
+<p>The IMU node used ~35% CPU (much in I/O wait) and starved DDS threads, delaying TF to the remote PC and overflowing RViz's message filter. <code>/scan</code> stayed at a clean 10 Hz, so it was never the bottleneck.</p>
+<div class="scroll"><table>
+<tr><th>#</th><th>Issue</th><th>Status</th><th>Notes</th></tr>
+<tr><td>1</td><td>Encoder serial corruption</td><td><span class="tag ok">Fixed in firmware</span></td><td>Print bug fixed; cable quality still suspected, test with wheels stationary</td></tr>
+<tr><td>2</td><td>IMU init (Errno 121)</td><td><span class="tag ok">Resolved</span></td><td>Wiring / I2C fix</td></tr>
+<tr><td>3</td><td>RViz queue drops</td><td><span class="tag warn">Mitigation pending</span></td><td>Lower IMU rate from 100 Hz (in progress)</td></tr>
+<tr><td>4</td><td>Startup motor twitch</td><td><span class="tag warn">Reduced</span></td><td>Pins zeroed first in <code>setup()</code>; 10 kΩ pull-downs on IN1–IN4, ENA, ENB in PCB phase</td></tr>
+<tr><td>5</td><td>udev symlink <code>/dev/turtlebot_arduino</code></td><td><span class="tag bad">Unconfirmed</span></td><td>Node cannot open the port without it</td></tr>
+</table></div>
+
+<h2>6. Configuration review (new findings)</h2>
+<p>Cross-checking the uploaded files turned up these inconsistencies. Items are ordered by likely impact; please verify each against your actual setup.</p>
+<div class="scroll"><table>
+<tr><th>Severity</th><th>Finding</th><th>Suggested action</th></tr>
+<tr><td><span class="tag bad">High</span></td><td><b>Duplicate odom→base_link TF.</b> <code>serial_odom_node</code> broadcasts it, while <code>cartographer.lua</code> sets <code>provide_odom_frame = true</code> (and <code>my_robot_lds_2d.lua</code> too).</td><td>Set <code>provide_odom_frame = false</code> when using wheel odometry, or disable the TF in the odom node.</td></tr>
+<tr><td><span class="tag bad">High</span></td><td><b>Wheel height in URDF.</b> Wheel joints sit at z = wheel_radius <i>relative to</i> <code>base_link</code>, which is already wheel_radius above the footprint, so axles are 0.12 m high.</td><td>Set wheel joint z to 0.</td></tr>
+<tr><td><span class="tag bad">High</span></td><td><b>Encoder voltage.</b> E6A2-CW3C is a 12 V device and the Due's I/O is 3.3 V (not 5-V tolerant).</td><td>Confirm a level shifter or divider and the open-collector output wiring before relying on the signal.</td></tr>
+<tr><td><span class="tag warn">Med</span></td><td>Wheel separation mismatch: URDF 0.50 m vs node/measurement 0.48 m.</td><td>Set URDF to 0.48.</td></tr>
+<tr><td><span class="tag warn">Med</span></td><td>Range settings differ: LD19 driver max 8.0 m; <code>my_robot.lua</code> 10 m; <code>my_robot_lds_2d.lua</code> 3.5 m. Min range 0.12 vs 0.2.</td><td>Pick one source of truth (LD19 is rated ~12 m but keep driver ≥ Cartographer).</td></tr>
+<tr><td><span class="tag warn">Med</span></td><td><code>cartographer.lua</code> tracks <code>imu_link</code> with <code>use_odometry = true</code> but <code>my_robot_lds_2d.lua</code> uses base_link with no IMU or odometry; two configs, two behaviours.</td><td>Decide on one config and delete the other.</td></tr>
+<tr><td><span class="tag warn">Med</span></td><td><code>ros2_control</code> block in the URDF names <code>DiffDriveController</code> as a hardware plugin; it is a controller, and none is launched.</td><td>Remove the block, or implement a proper hardware interface.</td></tr>
+<tr><td><span class="tag ok">Low</span></td><td>Stale header comment in <code>serial_odom_node.py</code> says <code>TICKS_PER_REV</code> is 0; value is 203.</td><td>Update comment.</td></tr>
+<tr><td><span class="tag ok">Low</span></td><td>Launch file uses a hard-coded path for the odom script; camera joint uses <code>pi</code> while the property is commented out (xacro's built-in <code>pi</code> works).</td><td>Package the node as an entry point.</td></tr>
+<tr><td><span class="tag ok">Low</span></td><td><code>MAX_WHEEL_SPEED = 0.5</code> is a guess and there is no watchdog: if <code>/cmd_vel</code> stops, the last PWM persists.</td><td>Measure max speed; add a command timeout on the Arduino or node.</td></tr>
+</table></div>
+
+<h2>7. Roadmap</h2>
+<div class="card"><b>Now</b><br>Lower IMU rate · confirm udev rule · resolve TF conflict · fix URDF wheel height/separation</div>
+<div class="card"><b>Next</b><br>Recalibrate <code>TICKS_PER_REV</code> over 5–10 revs · tune <code>MAX_WHEEL_SPEED</code> · add cmd_vel timeout · test serial cable · consolidate Cartographer configs · enable Nav2</div>
+<div class="card"><b>Later</b><br>Move IMU to the Due (extended protocol <code>E,l,r,ax,ay,az,gx,gy,gz,ms</code>) · PCB with 10 kΩ pull-downs · remove stale duplicate files in <code>my_robot</code> (3 copies of the odom node, <code>nano.*.save</code>) and confirm <code>ament_cmake</code> vs <code>ament_python</code></div>
+
+<h2>8. Key learnings</h2>
+<ul>
+<li>Single-edge counting is intentional; 203 ticks/rev is not x4 quadrature.</li>
+<li>A healthy sensor topic rate doesn't rule out a starved DDS thread; profile CPU and D-state.</li>
+<li>Floating GPIO on an L298N is a real failure mode; use pull-downs.</li>
+<li>Keep one canonical location per node.</li>
+</ul>
+<h2>9. Simulation results</h2>
+<p class="card"><b>Important:</b> these numbers come from a Python kinematic simulation using your real constants (R = 0.06 m, base 0.48 m, 203 ticks/rev, 50 ms packets, midpoint integration as in <code>serial_odom_node.py</code>). They are <b>not measurements from the physical robot</b>. Error magnitudes (e.g. 0.5% tick error) are assumptions. Wheel slip and motor dynamics are not modelled. Script and CSV are provided alongside this report; compare them with real runs.</p>
+<h3>9.1 Ideal case: quantization only</h3>
+<p>A 2 m square (4 sides, 4 × 90° turns) with perfect parameters ends with a position error of <b>0.36 mm</b> and heading error of <b>0.04°</b>. Single-edge encoding (1.86 mm/tick) is not limiting; parameter error dominates.</p>
+<h3>9.2 Realistic parameter errors (300 Monte Carlo runs)</h3>
+<p>Assumed σ: ticks/rev 0.5%, wheel base 8 mm, each wheel radius 0.4%.</p>
+<div class="scroll"><table><tr><th>Metric</th><th>Mean</th><th>95th pct</th></tr><tr><td>Final position error</td><td>16.0 cm</td><td>39.5 cm</td></tr><tr><td>Final heading error</td><td>6.5°</td><td>15.8°</td></tr></table></div>
+<svg viewBox="0 0 380 370" role="img" aria-label="Square path"><text x="190" y="22" text-anchor="middle" font-weight="600">2 m square: true vs odometry</text><polyline fill="none" stroke="var(--acc)" stroke-width="2.5"  points="96.4,284.9 101.7,284.9 106.9,284.9 112.1,284.9 117.4,284.9 122.6,284.9 127.8,284.9 133.1,284.9 138.3,284.9 143.5,284.9 148.8,284.9 154.0,284.9 159.2,284.9 164.5,284.9 169.7,284.9 174.9,284.9 180.1,284.9 185.4,284.9 190.6,284.9 195.8,284.9 201.1,284.9 206.3,284.9 211.5,284.9 216.8,284.9 222.0,284.9 227.2,284.9 232.5,284.9 237.7,284.9 242.9,284.9 248.2,284.9 253.4,284.9 258.6,284.9 263.9,284.9 269.1,284.9 274.3,284.9 279.6,284.9 284.8,284.9 290.0,284.9 295.3,284.9 300.5,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,284.9 304.4,283.6 304.5,278.3 304.5,273.1 304.6,267.9 304.7,262.6 304.7,257.4 304.8,252.2 304.8,246.9 304.9,241.7 304.9,236.5 305.0,231.2 305.0,226.0 305.1,220.8 305.2,215.6 305.2,210.3 305.3,205.1 305.3,199.9 305.4,194.6 305.4,189.4 305.5,184.2 305.6,178.9 305.6,173.7 305.7,168.5 305.7,163.2 305.8,158.0 305.8,152.8 305.9,147.5 306.0,142.3 306.0,137.1 306.1,131.8 306.1,126.6 306.2,121.4 306.2,116.1 306.3,110.9 306.3,105.7 306.4,100.4 306.5,95.2 306.5,90.0 306.6,84.8 306.6,79.5 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 306.7,75.6 305.4,75.6 300.1,75.5 294.9,75.3 289.7,75.2 284.4,75.1 279.2,75.0 274.0,74.9 268.7,74.8 263.5,74.7 258.3,74.6 253.1,74.4 247.8,74.3 242.6,74.2 237.4,74.1 232.1,74.0 226.9,73.9 221.7,73.8 216.4,73.6 211.2,73.5 206.0,73.4 200.7,73.3 195.5,73.2 190.3,73.1 185.1,73.0 179.8,72.9 174.6,72.7 169.4,72.6 164.1,72.5 158.9,72.4 153.7,72.3 148.4,72.2 143.2,72.1 138.0,72.0 132.7,71.8 127.5,71.7 122.3,71.6 117.0,71.5 111.8,71.4 106.6,71.3 101.4,71.2 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,71.1 97.4,72.4 97.2,77.6 97.1,82.8 96.9,88.1 96.7,93.3 96.5,98.5 96.4,103.8 96.2,109.0 96.0,114.2 95.9,119.5 95.7,124.7 95.5,129.9 95.4,135.1 95.2,140.4 95.0,145.6 94.8,150.8 94.7,156.1 94.5,161.3 94.3,166.5 94.2,171.7 94.0,177.0 93.8,182.2 93.7,187.4 93.5,192.7 93.3,197.9 93.2,203.1 93.0,208.4 92.8,213.6 92.6,218.8 92.5,224.0 92.3,229.3 92.1,234.5 92.0,239.7 91.8,245.0 91.6,250.2 91.5,255.4 91.3,260.6 91.1,265.9 91.0,271.1 90.8,276.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3 90.7,280.3"/><polyline fill="none" stroke="var(--bad)" stroke-width="2.5" stroke-dasharray="6 4" points="96.3,284.9 101.6,284.9 106.9,284.9 112.1,284.9 117.4,284.8 122.7,284.8 128.0,284.8 133.2,284.8 138.6,284.7 143.9,284.7 149.1,284.7 154.4,284.6 159.6,284.6 165.0,284.5 170.2,284.4 175.5,284.4 180.7,284.3 186.1,284.2 191.3,284.1 196.6,284.1 201.8,284.0 207.2,283.9 212.4,283.8 217.6,283.7 222.9,283.6 228.2,283.5 233.5,283.4 238.7,283.2 244.0,283.1 249.3,283.0 254.6,282.9 259.8,282.7 265.1,282.6 270.3,282.4 275.6,282.3 280.9,282.1 286.1,282.0 291.4,281.8 296.7,281.6 302.0,281.5 305.9,281.3 305.9,281.3 305.9,281.3 305.9,281.3 306.0,281.3 306.0,281.3 306.0,281.3 306.1,281.2 306.1,281.2 306.1,281.2 306.1,281.2 306.1,281.2 306.1,281.2 306.0,279.9 305.6,274.6 305.3,269.4 304.9,264.2 304.5,258.8 304.1,253.6 303.8,248.4 303.4,243.1 303.0,237.8 302.6,232.6 302.2,227.3 301.8,222.1 301.4,216.9 300.9,211.5 300.5,206.3 300.1,201.1 299.7,195.9 299.2,190.5 298.8,185.3 298.4,180.1 297.9,174.8 297.5,169.4 297.0,164.2 296.5,159.0 296.1,153.7 295.6,148.4 295.1,143.2 294.7,138.0 294.2,132.7 293.7,127.4 293.2,122.2 292.7,117.0 292.2,111.7 291.7,106.4 291.2,101.2 290.7,96.0 290.2,90.8 289.7,85.4 289.1,80.2 288.6,75.0 288.2,71.0 288.2,71.0 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.2,70.9 288.1,70.9 288.1,70.9 286.8,71.1 281.5,71.8 276.3,72.5 271.1,73.3 265.8,74.0 260.6,74.7 255.5,75.5 250.3,76.2 245.0,77.0 239.8,77.7 234.6,78.5 229.4,79.3 224.1,80.0 218.9,80.8 213.7,81.6 208.5,82.3 203.3,83.1 198.1,83.9 192.9,84.7 187.7,85.5 182.4,86.3 177.2,87.1 172.0,87.9 166.9,88.8 161.6,89.6 156.4,90.4 151.2,91.2 146.0,92.1 140.8,92.9 135.6,93.7 130.4,94.6 125.2,95.4 119.9,96.3 114.7,97.2 109.5,98.0 104.3,98.9 99.0,99.8 93.9,100.6 88.7,101.5 83.5,102.4 79.6,103.1 79.6,103.1 79.6,103.1 79.6,103.1 79.6,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.5,103.1 79.8,104.5 80.9,109.6 82.0,114.7 83.0,120.0 84.1,125.1 85.2,130.2 86.3,135.4 87.4,140.6 88.5,145.7 89.6,150.9 90.7,156.0 91.8,161.2 93.0,166.3 94.1,171.6 95.2,176.7 96.4,181.9 97.5,187.0 98.6,192.2 99.8,197.3 100.9,202.5 102.1,207.6 103.3,212.7 104.4,217.8 105.6,223.1 106.8,228.2 107.9,233.3 109.1,238.4 110.3,243.6 111.5,248.7 112.7,253.8 113.9,258.9 115.1,264.1 116.3,269.3 117.5,274.4 118.7,279.5 119.9,284.7 121.2,289.8 122.4,294.9 123.6,300.0 124.9,305.2 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.8,309.0 125.9,309.1 125.9,309.1 125.9,309.1 125.9,309.1"/><text x="60" y="355" font-size="12" fill="var(--acc)">— true</text><text x="130" y="355" font-size="12" fill="var(--bad)">- - odometry (+0.8% ticks, +1 cm base, 0.4% wheel mismatch)</text></svg>
+<h3>9.3 Wheel-base sensitivity</h3>
+<svg viewBox="0 0 560 250"><text x="290" y="20" text-anchor="middle" font-weight="600">Heading after a commanded 360° spin vs wheel-base error</text><line x1="70" y1="200" x2="520" y2="200" stroke="var(--mut)"/><line x1="70" y1="50" x2="70" y2="200" stroke="var(--mut)"/><line x1="70" y1="125.0" x2="520" y2="125.0" stroke="var(--ok)" stroke-dasharray="4 4"/><polyline fill="none" stroke="var(--acc)" stroke-width="3" points="70.0,182.6 107.5,172.7 145.0,163.8 182.5,153.8 220.0,145.0 257.5,135.0 295.0,126.1 332.5,116.1 370.0,107.3 407.5,98.4 445.0,88.4 482.5,79.6 520.0,69.6"/><g font-size="11" text-anchor="middle"><text x="70.0" y="218">-3 cm</text><text x="295.0" y="218">0</text><text x="520.0" y="218">+3 cm</text></g><g font-size="11" text-anchor="end"><text x="64" y="204.0">330°</text><text x="64" y="129.0">360°</text><text x="64" y="54.0">390°</text></g><text x="290" y="240" text-anchor="middle" font-size="12">true base − 0.48 m (≈ 7.5° heading error per cm)</text></svg>
+<p>A 1 cm error in the base value produces roughly 7.5° of heading error per full rotation. Since the URDF says 0.50 m and the node 0.48 m, settle this with a measured spin test.</p>
+<h3>9.4 Calibration method</h3>
+<svg viewBox="0 0 560 130"><text x="280" y="14" text-anchor="middle" font-weight="600" font-size="13">TICKS_PER_REV calibration uncertainty vs revolutions rotated</text><text x="8" y="40" font-size="12">1 rev</text><rect x="110" y="26" width="284" height="20" fill="var(--acc)" rx="3"/><text x="399" y="41" font-size="12">σ = 1.04%</text><text x="8" y="74" font-size="12">5 revs</text><rect x="110" y="60" width="56" height="20" fill="var(--acc)" rx="3"/><text x="171" y="75" font-size="12">σ = 0.21%</text><text x="8" y="108" font-size="12">10 revs</text><rect x="110" y="94" width="29" height="20" fill="var(--acc)" rx="3"/><text x="144" y="109" font-size="12">σ = 0.10%</text></svg>
+<p>Assuming ~1% hand-rotation uncertainty, rotating 10 revolutions cuts the tick-count uncertainty about 10× versus the single-revolution calibration currently used.</p>
+<h3>9.5 Serial faults</h3>
+<svg viewBox="0 0 560 200"><text x="280" y="14" text-anchor="middle" font-weight="600" font-size="13">Serial faults: mean heading / position error after square</text><text x="8" y="40" font-size="12">none</text><rect x="170" y="26" width="22" height="20" fill="var(--warn)" rx="3"/><text x="197" y="41" font-size="12">0.04° / 0.0 cm</text><text x="8" y="74" font-size="12">5% dropped</text><rect x="170" y="60" width="98" height="20" fill="var(--warn)" rx="3"/><text x="273" y="75" font-size="12">0.16° / 0.0 cm</text><text x="8" y="108" font-size="12">20% dropped</text><rect x="170" y="94" width="252" height="20" fill="var(--warn)" rx="3"/><text x="427" y="109" font-size="12">0.42° / 0.1 cm</text><text x="8" y="142" font-size="12">0.1% garbled digits</text><rect x="170" y="128" width="22" height="20" fill="var(--warn)" rx="3"/><text x="197" y="143" font-size="12">0.04° / 1.9 cm</text><text x="8" y="176" font-size="12">0.5% garbled digits</text><rect x="170" y="162" width="22" height="20" fill="var(--warn)" rx="3"/><text x="197" y="177" font-size="12">0.04° / 6.5 cm</text></svg>
+<p>Dropped packets barely affect position because ticks are cumulative, but the midpoint integration loses accuracy in turns. Garbled digits (modelled as a dropped leading digit on the left count) cause position jumps of several cm and are not filtered by the current parser; adding a plausibility check (e.g. reject |Δticks| above what max speed allows) is recommended.</p>
+<h3>9.6 Test data and procedures</h3>
+<p><code>sim_test_data.csv</code> holds 424 samples (t, true x/y, odom x/y, error) for the drifted square. Suggested real tests to validate against:</p>
+<div class="scroll"><table><tr><th>Test</th><th>Procedure</th><th>Simulated expectation</th></tr>
+<tr><td>Straight 3 m</td><td>Drive 3 m by tape measure; compare /odom</td><td>within ~1.5 cm with good calibration</td></tr>
+<tr><td>360° spin x5</td><td>Spin in place, compare heading</td><td>~7.5° per cm of base error</td></tr>
+<tr><td>2 m square (UMBmark)</td><td>CW and CCW, measure return error</td><td>mean ~16 cm, p95 ~39 cm</td></tr>
+<tr><td>Stationary serial check</td><td>Wheels still 10 min; count malformed lines</td><td>0 expected; any indicates cable</td></tr></table></div>
+
+<div class="card"><b>How to read sections 10–19:</b> items tagged <span class="tag ok">From your files</span> come directly from your uploaded files. Items tagged <span class="tag warn">Placeholder</span> are <b>guessed or illustrative values you asked for</b>. Replace them with real measurements before relying on them.</div>
+
+<h2>10. Interfaces <span class="tag ok">From your files</span></h2>
+<div class="scroll"><table><tr><th>Name</th><th>Type</th><th>Producer → Consumer</th></tr>
+<tr><td><code>/scan</code></td><td>LaserScan, 10 Hz, frame <code>lidar_link</code></td><td>ld19_lidar → Cartographer, RViz</td></tr>
+<tr><td><code>/imu</code></td><td>Imu, 100 Hz (to be lowered)</td><td>icm20948 → Cartographer</td></tr>
+<tr><td><code>/odom</code></td><td>Odometry, up to 100 Hz</td><td>serial_odom_node → Cartographer, Nav2</td></tr>
+<tr><td><code>/cmd_vel</code></td><td>Twist</td><td>Nav2 / teleop → serial_odom_node</td></tr>
+<tr><td><code>/reset_odom</code></td><td>std_srvs/Empty</td><td>operator → serial_odom_node</td></tr>
+<tr><td><code>/tf</code> <code>odom→base_link</code></td><td>TF</td><td>serial_odom_node (conflicts with Cartographer option)</td></tr></table></div>
+<h3>Serial protocol (115200 baud)</h3>
+<div class="scroll"><table><tr><th>Direction</th><th>Message</th><th>Meaning</th></tr>
+<tr><td>Pi → Due</td><td><code>P,pwmL,pwmR</code></td><td>PWM −255…255 per motor</td></tr>
+<tr><td>Pi → Due</td><td><code>R</code></td><td>Zero tick counters</td></tr>
+<tr><td>Due → Pi</td><td><code>E,left,right,millis</code></td><td>Cumulative ticks, every 50 ms</td></tr></table></div>
+<h3>TF tree</h3>
+<pre class="mermaid">
+flowchart TD
+ map --> odom --> base_footprint
+ base_footprint --> base_link
+ base_link --> left_wheel_link
+ base_link --> right_wheel_link
+ base_link --> rear_caster_link
+ base_link --> lidar_link
+ base_link --> camera_link
+ base_link --> imu_link
+</pre>
+<p class="sub">Note: the node publishes <code>odom→base_link</code> directly, while the URDF has <code>base_footprint→base_link</code>, so <code>base_link</code> would have two parents. Resolve this when fixing the TF conflict (section 6).</p>
+
+<h2>11. Pin map <span class="tag ok">From your files</span></h2>
+<div class="scroll"><table><tr><th>Function</th><th>Due pin</th><th>Function</th><th>Due pin</th></tr>
+<tr><td>Left IN1 / IN2</td><td>7 / 6</td><td>Right IN1 / IN2</td><td>5 / 4</td></tr>
+<tr><td>Left enable (PWM)</td><td>8</td><td>Right enable (PWM)</td><td>9</td></tr>
+<tr><td>Left encoder A / B</td><td>18 / 19</td><td>Right encoder A / B</td><td>3 / 2</td></tr></table></div>
+<p class="sub">Encoder interrupts trigger on channel A RISING; channel B gives direction. ENA/ENB planned to get 10 kΩ pull-downs.</p>
+
+<h2>12. Runbook</h2>
+<p>Get the code: <code>git clone https://github.com/SkyFarsa/Farzan.git</code></p>
+<h3>Startup</h3>
+<ol><li>Power the robot; wait for the RPi4 to boot (~45 s).</li>
+<li>Check <code>ls -l /dev/turtlebot_arduino</code> and <code>/dev/ttyUSB0</code> exist.</li>
+<li>On the RPi4: <code>ros2 launch my_robot robot.launch.py</code></li>
+<li>On the remote PC, with the same <code>ROS_DOMAIN_ID=30</code>: run <code>Slam.sh</code>, then RViz2.</li>
+<li>Verify: <code>ros2 topic hz /scan</code> (≈10), <code>/odom</code>, <code>/imu</code>.</li>
+<li>Drive slowly with teleop; reset with <code>ros2 service call /reset_odom std_srvs/srv/Empty</code>.</li></ol>
+<h3>Troubleshooting</h3>
+<div class="scroll"><table><tr><th>Symptom</th><th>Likely cause</th><th>Check</th></tr>
+<tr><td>Node exits: cannot open serial port</td><td>Missing udev symlink</td><td><code>ls /dev/tty*</code>, add rule</td></tr>
+<tr><td>RViz “queue is full” drops</td><td>RPi4 overloaded (IMU)</td><td><code>uptime</code>, <code>top</code>, lower IMU rate</td></tr>
+<tr><td>Map smears when turning</td><td>Wrong wheel base or TF conflict</td><td>Spin test, <code>ros2 run tf2_tools view_frames</code></td></tr>
+<tr><td>Odom jumps</td><td>Garbled serial line</td><td>Stationary serial capture</td></tr>
+<tr><td>Wheel twitches at boot</td><td>Floating pins</td><td>Expected until pull-downs fitted</td></tr></table></div>
+
+<h2>13. Cartographer config comparison <span class="tag ok">From your files</span></h2>
+<div class="scroll"><table><tr><th>Setting</th><th><code>my_robot.lua</code> + <code>cartographer.lua</code></th><th><code>my_robot_lds_2d.lua</code></th></tr>
+<tr><td>tracking_frame</td><td>imu_link</td><td>base_link</td></tr>
+<tr><td>use_imu_data / odometry</td><td>true / true</td><td>false / false</td></tr>
+<tr><td>min / max range</td><td>0.2 / 10 m</td><td>0.12 / 3.5 m</td></tr>
+<tr><td>missing_data_ray_length</td><td>2.0</td><td>3.0</td></tr>
+<tr><td>constraint min_score</td><td>0.55 (global 0.6)</td><td>0.65 (global 0.7)</td></tr>
+<tr><td>accumulated range data</td><td>1</td><td>default (1 in 2D)</td></tr></table></div>
+<p><b>Suggested merged starting point:</b> tracking_frame <code>base_link</code>, <code>use_odometry=true</code>, IMU off until its rate and calibration are verified, range 0.12–8 m to match the LD19 driver, <code>provide_odom_frame=false</code>, min_score 0.6.</p>
+
+<h2>14. Nav2 readiness checklist</h2>
+<div class="scroll"><table><tr><th>Item</th><th>Status</th></tr>
+<tr><td>Single odom TF source</td><td><span class="tag bad">Open</span></td></tr>
+<tr><td>Correct URDF wheel height / base</td><td><span class="tag bad">Open</span></td></tr>
+<tr><td>cmd_vel timeout / watchdog</td><td><span class="tag bad">Open</span></td></tr>
+<tr><td>Measured max speed and acceleration limits</td><td><span class="tag warn">Placeholder value</span></td></tr>
+<tr><td>Footprint (triangle, 0.43 m sides) in costmap</td><td><span class="tag warn">To do</span></td></tr>
+<tr><td>Saved map (<code>map.yaml</code>)</td><td><span class="tag warn">Verify</span></td></tr>
+<tr><td>Stable scan and TF on WiFi</td><td><span class="tag warn">Pending IMU rate fix</span></td></tr></table></div>
+
+<h2>15. Safety</h2>
+<ul><li>Fit a physical emergency stop that cuts motor power.</li>
+<li>Firmware watchdog: stop motors if no <code>P</code> command arrives within ~500 ms (not present today).</li>
+<li>Limit PWM during first floor tests (e.g. ≤ 120).</li>
+<li>Lift the wheels off the ground when flashing or resetting the Due.</li>
+<li>Pull-downs on L298N logic and enable pins (PCB phase).</li></ul>
+
+<h2>16. Illustrative test results <span class="tag warn">Placeholder</span></h2>
+<p><b>These are invented example values</b> showing how a filled test log could look. They are not measurements.</p>
+<div class="scroll"><table><tr><th>Test</th><th>Expected (sim)</th><th>Example result</th><th>Verdict</th></tr>
+<tr><td>Straight 3 m</td><td>≤ 1.5 cm</td><td>2.1 cm short</td><td><span class="tag ok">Pass</span></td></tr>
+<tr><td>5 × 360° spin</td><td>≈ 0° per cm base error</td><td>+9° total</td><td><span class="tag ok">Pass</span></td></tr>
+<tr><td>2 m square CW</td><td>≈ 16 cm</td><td>21 cm</td><td><span class="tag warn">Marginal</span></td></tr>
+<tr><td>2 m square CCW</td><td>≈ 16 cm</td><td>12 cm</td><td><span class="tag ok">Pass</span></td></tr>
+<tr><td>Stationary serial, 10 min</td><td>0 bad lines</td><td>7 bad lines</td><td><span class="tag bad">Fail (cable)</span></td></tr>
+<tr><td>Loop-closure map, 60 m²</td><td>Closed</td><td>Closed, 4 cm wall doubling</td><td><span class="tag ok">Pass</span></td></tr></table></div>
+
+<h2>17. Power budget <span class="tag warn">Placeholder</span></h2>
+<p>Guessed values; please measure with a meter.</p>
+<div class="scroll"><table><tr><th>Load</th><th>Voltage</th><th>Typical</th><th>Peak</th></tr>
+<tr><td>Motors (2×, 24 V)</td><td>24 V</td><td>1.5 A</td><td>6 A</td></tr>
+<tr><td>RPi4 + USB devices</td><td>5 V</td><td>1.2 A</td><td>3 A</td></tr>
+<tr><td>Arduino Due + encoders</td><td>5–12 V</td><td>0.25 A</td><td>0.4 A</td></tr>
+<tr><td>LD19 LIDAR</td><td>5 V</td><td>0.3 A</td><td>0.5 A</td></tr>
+<tr><td>OAK-D Lite</td><td>5 V</td><td>0.6 A</td><td>0.9 A</td></tr></table></div>
+<p>Estimated draw ≈ 50 W typical, giving roughly 2.4 h on a 24 V 5 Ah pack (guess). Note the L298N's voltage drop (~2 V) and heat at high current.</p>
+
+<h2>18. Bill of materials <span class="tag warn">Placeholder</span></h2>
+<div class="scroll"><table><tr><th>Part</th><th>Qty</th><th>Est. cost (USD)</th></tr>
+<tr><td>Raspberry Pi 4</td><td>1</td><td>60</td></tr><tr><td>Arduino Due</td><td>1</td><td>45</td></tr>
+<tr><td>24 V DC motors</td><td>2</td><td>90</td></tr><tr><td>Omron E6A2-CW3C encoders</td><td>2</td><td>80</td></tr>
+<tr><td>L298N driver</td><td>1</td><td>8</td></tr><tr><td>LD19 LIDAR</td><td>1</td><td>80</td></tr>
+<tr><td>OAK-D Lite</td><td>1</td><td>150</td></tr><tr><td>ICM20948 IMU</td><td>1</td><td>15</td></tr>
+<tr><td>24 V battery + charger</td><td>1</td><td>70</td></tr><tr><td>Frame, wheels, caster, wiring</td><td>—</td><td>60</td></tr>
+<tr><th>Total (guess)</th><th></th><th>≈ 660</th></tr></table></div>
+
+<h2>19. Risks, changelog, glossary</h2>
+<div class="scroll"><table><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr>
+<tr><td>TF conflict corrupts SLAM</td><td>High</td><td>High</td><td>Single odom source</td></tr>
+<tr><td>Encoder signal damaged by 12 V</td><td>Medium</td><td>High</td><td>Level shifting</td></tr>
+<tr><td>Runaway robot on command loss</td><td>Medium</td><td>High</td><td>Watchdog, e-stop</td></tr>
+<tr><td>WiFi lag breaks Nav2</td><td>Medium</td><td>Medium</td><td>Lower IMU rate, wired test</td></tr>
+<tr><td>Serial cable corruption</td><td>Medium</td><td>Medium</td><td>Replace cable, add checksum</td></tr></table></div>
+<h3>Changelog (from your notes)</h3>
+<ul><li>Firmware: fixed encoder print bug; added <code>R</code> command; zeroed pins first in <code>setup()</code>.</li>
+<li>Odom node: base corrected to 0.48 m; TICKS_PER_REV 203; midpoint integration, thread-safe publishing, reset service.</li>
+<li>Launch: single <code>robot.launch.py</code> replaced the tmux startup.</li>
+<li>Diagnosed RViz drops as IMU CPU load.</li></ul>
+<p><b>Glossary:</b> <b>TF</b> – ROS coordinate frame transforms. <b>DDS</b> – ROS 2 middleware. <b>UMBmark</b> – square-path odometry calibration test. <b>D-state</b> – Linux uninterruptible I/O wait. <b>SLAM</b> – simultaneous localization and mapping.</p>
+</main>
+<!--claude-mermaid-runtime-begin:3477-->
+<style>.mermaid-diagram{margin-block:4px}.mermaid-diagram svg{display:block;margin:0 auto;max-width:100%;height:auto}</style>
+<script src="/_runtime/mermaid-11.16.1.min.js"></script>
+<script>(function(){
+var CFG={"palettes":{"light":{"surface":"#f4efe4","text":"#42392e","line":"#8a7f6d","border":"#7a6c52","bg":"#fffdf8"},"dark":{"surface":"#262b34","text":"#f2f3f5","line":"#a8adb8","border":"#9aa4b8","bg":"#1f232b"}}};
+if(typeof mermaid==='undefined')return;
+var pres=Array.prototype.slice.call(document.querySelectorAll('pre.mermaid')).filter(function(p){if(p.hasAttribute('data-claude-mermaid-claimed'))return false;p.setAttribute('data-claude-mermaid-claimed','1');return true;});
+if(!pres.length)return;
+var mq=window.matchMedia?window.matchMedia('(prefers-color-scheme: dark)'):null;
+var root=document.documentElement;
+var items=pres.map(function(pre){
+var mount=document.createElement('div');mount.className='mermaid-diagram';
+return {pre:pre,mount:mount,src:pre.textContent||''};
+});
+var seq=0;
+var renderGen=0;
+var lastKey='';
+function pageBg(fallback){
+var els=[document.body,document.documentElement];
+for(var i=0;i<els.length;i++){
+var c=els[i]&&getComputedStyle(els[i]).backgroundColor;
+if(c&&c!=='transparent'&&c!=='rgba(0, 0, 0, 0)')return c;
+}
+return fallback;
+}
+function render(){
+var theme=root.getAttribute('data-theme');
+var dark=theme==='dark'||(!!(mq&&mq.matches)&&theme!=='light');
+var pal=dark?CFG.palettes.dark:CFG.palettes.light;
+var bg=pageBg(pal.bg);
+var key=(dark?'d':'l')+'|'+bg;
+if(key===lastKey)return;
+lastKey=key;
+var gen=++renderGen;
+var font=getComputedStyle(document.body).fontFamily||'sans-serif';
+var nat={useMaxWidth:false};
+mermaid.initialize({
+startOnLoad:false,securityLevel:'strict',theme:'base',
+flowchart:nat,sequence:nat,er:nat,state:nat,class:nat,pie:nat,
+gantt:nat,journey:nat,timeline:nat,gitGraph:nat,mindmap:nat,xyChart:nat,
+quadrantChart:nat,sankey:nat,c4:nat,requirement:nat,block:nat,
+packet:nat,kanban:nat,architecture:nat,radar:nat,
+themeVariables:{background:bg,mainBkg:pal.surface,primaryColor:pal.surface,
+primaryTextColor:pal.text,lineColor:pal.line,primaryBorderColor:pal.border,
+nodeBorder:pal.border,clusterBorder:pal.border,edgeLabelBackground:bg,
+clusterBkg:'rgba(127,127,127,0.07)',titleColor:pal.text,
+darkMode:dark,rowOdd:bg,rowEven:'rgba(127,127,127,0.07)',
+attributeBackgroundColorOdd:bg,attributeBackgroundColorEven:'rgba(127,127,127,0.07)',
+fontSize:'16px',fontFamily:font},
+themeCSS:'.node rect, .node circle, .node polygon, .node path, .cluster rect { stroke-width: 2px; }'
+});
+items.forEach(function(it){
+var id='claude-mermaid-'+seq++;
+mermaid.render(id,it.src).then(function(r){
+if(gen!==renderGen)return;
+var prev=it.pre.previousElementSibling;
+if(prev&&prev.className==='mermaid-diagram'&&prev!==it.mount)return;
+it.mount.innerHTML=r.svg;
+if(!it.mount.parentNode)it.pre.parentNode.insertBefore(it.mount,it.pre);
+it.pre.style.display='none';
+},function(){
+var scratch=document.getElementById(id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+scratch=document.getElementById('d'+id);
+if(scratch)scratch.parentNode.removeChild(scratch);
+if(gen!==renderGen)return;
+if(it.mount.parentNode)it.mount.parentNode.removeChild(it.mount);
+it.pre.style.display='';
+});
+});
+}
+render();
+if(mq&&mq.addEventListener)mq.addEventListener('change',render);
+if(typeof MutationObserver!=='undefined')new MutationObserver(render).observe(root,{attributes:true,attributeFilter:['data-theme']});
+})();</script>
+<!--claude-mermaid-runtime-end-->
+</body>
+</html>
+
+</body></html>
